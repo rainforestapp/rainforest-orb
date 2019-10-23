@@ -1,0 +1,62 @@
+version: 2.1
+description: Rainforest QA's CircleCI Orb
+
+executors:
+  latest:
+    description: Latest Rainforest CLI Docker image
+    docker:
+      - image: gcr.io/rf-public-images/rainforest-cli:latest
+
+jobs:
+  run:
+    description: Start a new Rainforest run
+
+    parameters:
+      description:
+        description: An arbitrary string to associate with the run
+        type: string
+        default: "$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date +'%Y-%m-%d_%H-%M-%S')"
+
+      run_group_id:
+        description: Only run tests tied to this Run Group
+        type: integer
+
+      environment_id:
+        description: Use a specific environment for this run
+        type: integer
+
+      conflict:
+        description: How should we handle current other runs that are in progress. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
+        type: enum
+        enum: ["abort", "abort-all"]
+
+      crowd:
+        description: The crowd to use for this run
+        type: enum
+        enum: ["default", "automation", "on_premise_crowd"]
+        default: default
+
+      release:
+        description: Manually entered release information about the release the run is associated with
+        type: string
+        default: "$CIRCLE_SHA1"
+
+      executor:
+        description: The executor to run this command in
+        type: executor
+        default: latest
+
+    executor: <<parameters.executor>>
+
+    steps:
+      - run:
+          name: Run Rainforest
+          command: |
+            rainforest-cli run \
+              --token "$RAINFOREST_TOKEN" \
+              --description <<parameters.description>> \
+              --environment-id <<parameters.environment_id>> \
+              --run-group <<parameters.run_group_id>> \
+              --conflict <<parameters.conflict>> \
+              --release <<parameters.release>>
+              --crowd <<parameters.crowd>>
