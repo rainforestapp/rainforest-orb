@@ -54,7 +54,7 @@ jobs:
           command: |
             rainforest-cli run \
               --token "$RAINFOREST_TOKEN" \
-              --description <<parameters.description>> \
+              --description "<<parameters.description>>" \
               --environment-id <<parameters.environment_id>> \
               --run-group <<parameters.run_group_id>> \
               --conflict <<parameters.conflict>> \
