@@ -58,5 +58,5 @@ jobs:
               --environment-id <<parameters.environment_id>> \
               --run-group <<parameters.run_group_id>> \
               --conflict <<parameters.conflict>> \
-              --release <<parameters.release>>
+              --release <<parameters.release>> \
               --crowd <<parameters.crowd>>
