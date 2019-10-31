@@ -28,6 +28,7 @@ workflows:
           checkout: true
           orb-name: rainforest-qa/rainforest
           orb-path: src/orb.yml
+          publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
           validate: true
 
       - orb-tools/publish:
@@ -40,4 +41,5 @@ workflows:
                 - /^\d+\.\d+\.\d+$/
           orb-path: src/orb.yml
           orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG}
+          publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
           validate: true
