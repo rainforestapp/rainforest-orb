@@ -1,5 +1,10 @@
 version: 2.1
-description: Rainforest QA's CircleCI Orb
+description: |
+  Rainforest QA's CircleCI Orb
+  Pre-requisites:
+    - a Rainforest QA account (https://app.rainforestqa.com/trial)
+    - a Rainforest QA API token (https://app.rainforestqa.com/settings/integrations)
+    - a RunGroup with some tests (https://app.rainforestqa.com/tests)
 
 executors:
   latest:
@@ -23,12 +28,14 @@ jobs:
 
       environment_id:
         description: Use a specific environment for this run
-        type: integer
+        type: string
+        default: ""
 
       conflict:
         description: How should we handle current other runs that are in progress. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
         type: enum
-        enum: ["abort", "abort-all"]
+        enum: ["abort", "abort-all", ""]
+        default: ""
 
       crowd:
         description: The crowd to use for this run
@@ -40,6 +47,11 @@ jobs:
         description: Manually entered release information about the release the run is associated with
         type: string
         default: "$CIRCLE_SHA1"
+
+      token:
+        description: The name of the environment variable containing your Rainforest QA API token
+        type: env_var_name
+        default: RAINFOREST_TOKEN
 
       executor:
         description: The executor to run this command in
@@ -53,10 +65,24 @@ jobs:
           name: Run Rainforest
           command: |
             rainforest-cli run \
-              --token "$RAINFOREST_TOKEN" \
-              --description <<parameters.description>> \
-              --environment-id <<parameters.environment_id>> \
+              --token ${<< parameters.token >>} \
+              --description "<< parameters.description >>" \
               --run-group <<parameters.run_group_id>> \
-              --conflict <<parameters.conflict>> \
-              --release <<parameters.release>>
-              --crowd <<parameters.crowd>>
+              <<# parameters.environment_id >> --environment-id << parameters.environment_id >> <</ parameters.environment_id >> \
+              <<# parameters.conflict >> --conflict << parameters.conflict >> <</ parameters.conflict >> \
+              --release << parameters.release >> \
+              --crowd << parameters.crowd >>
+
+examples:
+  simple:
+    description: |
+      Run tests from a specific run group
+    usage:
+      version: 2.1
+      orbs:
+        rainforest: rainforest-qa/rainforest@0
+      workflows:
+        build:
+          jobs:
+            - rainforest/run:
+                run_group_id: 123
