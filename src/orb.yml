@@ -1,10 +1,11 @@
 version: 2.1
 description: |
   Rainforest QA's CircleCI Orb
-  Pre-requisites:
+  Prerequisites:
     - a Rainforest QA account (https://app.rainforestqa.com/trial)
     - a Rainforest QA API token (https://app.rainforestqa.com/settings/integrations)
     - a RunGroup with some tests (https://app.rainforestqa.com/tests)
+  Orb repo (fleshed out README and full source code): https://github.com/rainforestapp/rainforest-orb
 
 executors:
   latest:
@@ -32,7 +33,7 @@ jobs:
         default: ""
 
       conflict:
-        description: How should we handle current other runs that are in progress. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
+        description: How other currently in-progress runs should be handled. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
         type: enum
         enum: ["abort", "abort-all", ""]
         default: ""
