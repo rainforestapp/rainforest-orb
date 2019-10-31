@@ -43,6 +43,11 @@ jobs:
         type: string
         default: "$CIRCLE_SHA1"
 
+      token:
+        description: The name of the environment variable containing your Rainforest QA API token
+        type: env_var_name
+        default: RAINFOREST_TOKEN
+
       executor:
         description: The executor to run this command in
         type: executor
@@ -55,7 +60,7 @@ jobs:
           name: Run Rainforest
           command: |
             rainforest-cli run \
-              --token "$RAINFOREST_TOKEN" \
+              --token ${<< parameters.token >>} \
               --description "<<parameters.description>>" \
               --run-group <<parameters.run_group_id>> \
               <<# parameters.environment_id >> --environment-id << parameters.environment_id >> <</ parameters.environment_id >> \
