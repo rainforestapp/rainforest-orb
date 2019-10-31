@@ -17,7 +17,7 @@ workflows:
       - validate_orb:
         filters:
           branches:
-            except:
+            ignore:
               - master
 
       - orb-tools/publish-dev:
@@ -33,8 +33,8 @@ workflows:
       - orb-tools/publish:
           filters:
             branches:
-              only:
-                - master
+              ignore:
+                - /.*/
             tags:
               only:
                 - /^\d+\.\d+\.\d+$/
