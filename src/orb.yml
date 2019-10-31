@@ -48,8 +48,8 @@ jobs:
       crowd:
         description: The crowd to use for this run
         type: enum
-        enum: ["default", "automation", "on_premise_crowd"]
-        default: default
+        enum: ["default", "automation", "on_premise_crowd", ""]
+        default: ""
 
       release:
         description: Manually entered release information about the release the run is associated with
@@ -78,8 +78,8 @@ jobs:
               --run-group "<< parameters.run_group_id >>" \
               <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
               <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
-              --release "<< parameters.release >>" \
-              --crowd "<< parameters.crowd >>"
+              <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
+              --release "<< parameters.release >>"
 
 examples:
   simple:
