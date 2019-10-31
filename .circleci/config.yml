@@ -15,10 +15,10 @@ workflows:
   btd:
     jobs:
       - validate_orb:
-        filters:
-          branches:
-            ignore:
-              - master
+          filters:
+            branches:
+              ignore:
+                - master
 
       - orb-tools/publish-dev:
           filters:
