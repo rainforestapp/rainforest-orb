@@ -104,6 +104,18 @@ Any executor which has the Rainforest CLI installed will work.
 #### Default behavior
 A Docker image with the latest version of the Rainforest CLI installed will be used.
 
+## Executors
+### `default`
+A Docker image with the latest version of the Rainforest CLI installed.
+### Parameters
+#### `tag`
+##### Type
+`string`
+##### Allowed values
+See [list of tags](https://gcr.io/rf-public-images/rainforest-cli).
+##### Default behavior
+The `latest` tag is used.
+
 ## Examples
 ### Using all parameters
 ```yaml
