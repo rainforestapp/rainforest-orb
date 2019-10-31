@@ -1,15 +1,25 @@
 version: 2.1
 orbs:
+  cli: circleci/circleci-cli@0.1.5
   orb-tools: circleci/orb-tools@8.27.4
+
+jobs:
+  validate_orb:
+    executor: cli/default
+    steps:
+      - checkout
+      - orb-tools/validate:
+          orb-path: src/orb.yml
 
 workflows:
   btd:
     jobs:
-      - orb-tools/validate:
+      - validate_orb:
         filters:
           branches:
             except:
               - master
+
       - orb-tools/publish:
           filters:
             branches:
