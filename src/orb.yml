@@ -1,5 +1,10 @@
 version: 2.1
-description: Rainforest QA's CircleCI Orb
+description: |
+  Rainforest QA's CircleCI Orb
+  Pre-requisites:
+    - a Rainforest QA account (https://app.rainforestqa.com/trial)
+    - a Rainforest QA API token (https://app.rainforestqa.com/settings/integrations)
+    - a RunGroup with some tests (https://app.rainforestqa.com/tests)
 
 executors:
   latest:
@@ -67,3 +72,17 @@ jobs:
               <<# parameters.conflict >> --conflict << parameters.conflict >> <</ parameters.conflict >> \
               --release << parameters.release >> \
               --crowd << parameters.crowd >>
+
+examples:
+  simple:
+    description: |
+      Run tests from a specific run group
+    usage:
+      version: 2.1
+      orbs:
+        rainforest: rainforest-qa/rainforest@0
+      workflows:
+        build:
+          jobs:
+            - rainforest/run:
+                run_group_id: 123
