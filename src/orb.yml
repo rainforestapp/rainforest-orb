@@ -66,13 +66,13 @@ jobs:
           name: Run Rainforest
           command: |
             rainforest-cli run \
-              --token ${<< parameters.token >>} \
+              --token "${<< parameters.token >>}" \
               --description "<< parameters.description >>" \
-              --run-group <<parameters.run_group_id>> \
-              <<# parameters.environment_id >> --environment-id << parameters.environment_id >> <</ parameters.environment_id >> \
-              <<# parameters.conflict >> --conflict << parameters.conflict >> <</ parameters.conflict >> \
-              --release << parameters.release >> \
-              --crowd << parameters.crowd >>
+              --run-group "<< parameters.run_group_id >>" \
+              <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
+              <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
+              --release "<< parameters.release >>" \
+              --crowd "<< parameters.crowd >>"
 
 examples:
   simple:
