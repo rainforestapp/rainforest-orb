@@ -20,6 +20,16 @@ workflows:
             except:
               - master
 
+      - orb-tools/publish-dev:
+          filters:
+            branches:
+              only:
+                - master
+          checkout: true
+          orb-name: rainforest-qa/rainforest
+          orb-path: src/orb.yml
+          validate: true
+
       - orb-tools/publish:
           filters:
             branches:
