@@ -61,9 +61,9 @@ jobs:
           command: |
             rainforest-cli run \
               --token ${<< parameters.token >>} \
-              --description "<<parameters.description>>" \
+              --description "<< parameters.description >>" \
               --run-group <<parameters.run_group_id>> \
               <<# parameters.environment_id >> --environment-id << parameters.environment_id >> <</ parameters.environment_id >> \
               <<# parameters.conflict >> --conflict << parameters.conflict >> <</ parameters.conflict >> \
-              --release <<parameters.release>> \
-              --crowd <<parameters.crowd>>
+              --release << parameters.release >> \
+              --crowd << parameters.crowd >>
