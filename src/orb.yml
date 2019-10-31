@@ -23,12 +23,14 @@ jobs:
 
       environment_id:
         description: Use a specific environment for this run
-        type: integer
+        type: string
+        default: ""
 
       conflict:
         description: How should we handle current other runs that are in progress. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
         type: enum
-        enum: ["abort", "abort-all"]
+        enum: ["abort", "abort-all", ""]
+        default: ""
 
       crowd:
         description: The crowd to use for this run
@@ -55,8 +57,8 @@ jobs:
             rainforest-cli run \
               --token "$RAINFOREST_TOKEN" \
               --description "<<parameters.description>>" \
-              --environment-id <<parameters.environment_id>> \
               --run-group <<parameters.run_group_id>> \
-              --conflict <<parameters.conflict>> \
+              <<# parameters.environment_id >> --environment-id << parameters.environment_id >> <</ parameters.environment_id >> \
+              <<# parameters.conflict >> --conflict << parameters.conflict >> <</ parameters.conflict >> \
               --release <<parameters.release>> \
               --crowd <<parameters.crowd>>
