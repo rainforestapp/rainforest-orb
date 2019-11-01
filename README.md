@@ -1,5 +1,5 @@
 # Rainforest QA CircleCI Orb
-`v0.0.1`
+`v0.1.0`
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ workflows:
     jobs:
       - rainforest/run:
           # Replace the value with the ID of whichever run group you want to run
-          run_group_id: 123
+          run_group_id: "123"
 ```
 
 ## Optional Parameters
@@ -53,7 +53,7 @@ This means that if no `description` parameter is passed in and your repository i
 ### `environment_id`
 Use a specific environment for this run.
 #### Type
-`integer`
+`string`
 #### Default behavior
 If no `environment_id` parameter is passed in, the created run will use the Run Group's default environment.
 
@@ -124,9 +124,9 @@ workflows:
   my_workflow:
     jobs:
       - rainforest/run:
-          run_group_id: 123
+          run_group_id: "123"
           description: Smoke suite
-          environment_id: 456
+          environment_id: "456"
           conflict: abort-all
           crowd: automation
           release: $CIRCLE_TAG
@@ -145,5 +145,5 @@ workflows:
             branches:
               only:
                 - master
-          run_group_id: 123
+          run_group_id: "123"
 ```

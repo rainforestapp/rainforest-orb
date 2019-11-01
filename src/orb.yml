@@ -20,6 +20,45 @@ executors:
         type: string
         default: latest
 
+commands:
+  validate_numeric:
+    description: Validate parameter is a number
+    parameters:
+      key:
+        description: The name of the parameter to validate
+        type: string
+      value:
+        description: The value of the parameter to validate
+        type: string
+    steps:
+      - run:
+          name: Verify << parameters.key >> is a number
+          command: |
+            if ! echo "<< parameters.value >>" | grep -Eq '^[0-9]+$' ; then
+              echo "Error: << parameters.value >> not a number"
+              exit 1
+            fi
+  validate_enum:
+    description: Validate parameter is an allowed value
+    parameters:
+      key:
+        description: The name of the parameter to validate
+        type: string
+      value:
+        description: The value of the parameter to validate
+        type: string
+      enum:
+        description: The space-delimited list of accepted values
+        type: string
+    steps:
+      - run:
+          name: Verify << parameters.key >> is an allowed value
+          command: |
+            if ! echo "<< parameters.enum >>" | grep -Eq "(^|[[:space:]])"<< parameters.value >>"($|[[:space:]])" ; then
+              echo "Error: << parameters.value >> not in << parameters.enum >>"
+              exit 1
+            fi
+
 jobs:
   run:
     description: Start a new Rainforest run
@@ -32,7 +71,7 @@ jobs:
 
       run_group_id:
         description: Only run tests tied to this Run Group
-        type: integer
+        type: string
 
       environment_id:
         description: Use a specific environment for this run
@@ -40,15 +79,13 @@ jobs:
         default: ""
 
       conflict:
-        description: How other currently in-progress runs should be handled. Values are 'abort' to abort runs in the same environment as your new run and 'abort-all' to abort all runs
-        type: enum
-        enum: ["abort", "abort-all", ""]
+        description: How other currently in-progress runs should be handled. Values are `abort` to abort runs in the same environment as your new run and `abort-all` to abort all runs
+        type: string
         default: ""
 
       crowd:
         description: The crowd to use for this run
-        type: enum
-        enum: ["default", "automation", "on_premise_crowd", ""]
+        type: string
         default: ""
 
       release:
@@ -69,6 +106,36 @@ jobs:
     executor: <<parameters.executor>>
 
     steps:
+      - run:
+          name: Verify Rainforest API token is available
+          command: |
+            if ! [ ${<< parameters.token >>} ] ; then
+              echo "Error: << parameters.token >> not set"
+              exit 1
+            fi
+      - validate_numeric:
+          key: run_group_id
+          value: << parameters.run_group_id >>
+      - when:
+          condition: << parameters.environment_id >>
+          steps:
+            - validate_numeric:
+                key: environment_id
+                value: << parameters.environment_id >>
+      - when:
+          condition: << parameters.conflict >>
+          steps:
+            - validate_enum:
+                key: conflict
+                value: << parameters.conflict >>
+                enum: abort abort-all
+      - when:
+          condition: << parameters.crowd >>
+          steps:
+            - validate_enum:
+                key: crowd
+                value: << parameters.crowd >>
+                enum: default automation on_premise_crowd
       - run:
           name: Run Rainforest
           command: |
