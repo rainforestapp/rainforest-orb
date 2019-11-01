@@ -88,7 +88,7 @@ examples:
     usage:
       version: 2.1
       orbs:
-        rainforest: rainforest-qa/rainforest@0
+        rainforest: rainforest-qa/rainforest@0.0.1
       workflows:
         build:
           jobs:

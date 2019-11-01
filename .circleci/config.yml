@@ -38,8 +38,8 @@ workflows:
                 - /.*/
             tags:
               only:
-                - /^\d+\.\d+\.\d+$/
+                - /^v\d+\.\d+\.\d+$/
           orb-path: src/orb.yml
-          orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG}
+          orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG:1}
           publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
           validate: true

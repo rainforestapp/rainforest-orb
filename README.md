@@ -1,4 +1,5 @@
-# RainforestQA CircleCI Orb
+# Rainforest QA CircleCI Orb
+`v0.0.1`
 
 ## Prerequisites
 
@@ -25,7 +26,7 @@ Once you have a run group which contains at least one test (included either dire
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@0.0.0
+  - rainforest: rainforest-qa/rainforest@0.0.1
 
 # In your workflows, add it as a job to be run
 workflows:
