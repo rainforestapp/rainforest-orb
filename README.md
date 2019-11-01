@@ -1,5 +1,5 @@
 # Rainforest QA CircleCI Orb
-`v0.0.1`
+`v0.1.0`
 
 ## Prerequisites
 
