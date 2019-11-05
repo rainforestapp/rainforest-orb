@@ -1,5 +1,7 @@
 # Rainforest QA CircleCI Orb
-`v0.1.0`
+**Registry homepage:** [`rainforest-qa/rainforest@0.1.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
+
+> This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
 
 ## Sections
 * [Prerequisites](##Prerequisites)
