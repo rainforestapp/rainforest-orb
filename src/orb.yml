@@ -67,7 +67,7 @@ jobs:
       description:
         description: An arbitrary string to associate with the run
         type: string
-        default: "$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date +'%Y-%m-%d_%H-%M-%S')"
+        default: "$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"
 
       run_group_id:
         description: Only run tests tied to this Run Group

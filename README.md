@@ -45,10 +45,10 @@ An arbitrary string to associate with the run.
 `string`
 #### Default behavior
 The default value defined in the orb is:
-> `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date +'%Y-%m-%d_%H-%M-%S')"`
+> `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
 
-This means that if no `description` parameter is passed in and your repository is named `my_repo`, the Circle build is `#42` on the `my_feature_branch` branch, and the current time is noon on January 20th, 2021; then the created run's description will be:
-> `my_repo - my_feature_branch 42 2021-01-20_12-00-00`
+This means that if no `description` parameter is passed in and your repository is named `my_repo`, the Circle build is `#42` on the `my_feature_branch` branch, and the current time (in UTC) is noon on January 20th, 2021; then the created run's description will be:
+> `my_repo - my_feature_branch 42 2021-01-20T12:00:00Z`
 
 ### `environment_id`
 Use a specific environment for this run.
