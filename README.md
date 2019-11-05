@@ -23,6 +23,9 @@ Once you have a run group which contains at least one test (included either dire
 ```yaml
 # .circleci/config.yml
 
+# To use orbs, your CircleCI config file must use version 2.1
+version: 2.1
+
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
