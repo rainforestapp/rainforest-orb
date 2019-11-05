@@ -120,14 +120,10 @@ A Docker image with the latest version of the Rainforest CLI installed will be u
 ## Executors
 ### `default`
 A Docker image with the latest version of the Rainforest CLI installed.
-### Parameters
-#### `tag`
-##### Type
-`string`
-##### Allowed values
-See [list of tags](https://gcr.io/rf-public-images/rainforest-cli).
-##### Default behavior
-The `latest` tag is used.
+#### Parameters
+Parameter | Type | Allowed values | Default Behavior
+ --- | --- | --- | ---
+ `tag` | `string` | See [list of tags](https://gcr.io/rf-public-images/rainforest-cli). | The `latest` tag is used.
 
 ## Examples
 ### Using all parameters
