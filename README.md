@@ -1,6 +1,13 @@
 # Rainforest QA CircleCI Orb
 `v0.1.0`
 
+## Sections
+* [Prerequisites](##Prerequisites)
+* [Base Usage](##Base%20Usage)
+* [Optional Parameters](##Optional%20Parameters)
+* [Executors](##Executors)
+* [Examples](##Examples)
+
 ## Prerequisites
 
 ### A Rainforest QA account
