@@ -7,6 +7,7 @@
 * [Prerequisites](##Prerequisites)
 * [Base Usage](##Base%20Usage)
 * [Optional Parameters](##Optional%20Parameters)
+* [Commands](##Commands)
 * [Executors](##Executors)
 * [Examples](##Examples)
 
@@ -116,6 +117,18 @@ The executor to run the `rainforest/run` CircleCI job in.
 Any executor which has the Rainforest CLI installed will work.
 #### Default behavior
 A Docker image with the latest version of the Rainforest CLI installed will be used.
+
+## Commands
+### `install`
+Install the Rainforest CLI
+#### Parameters
+Parameter | Type | Allowed values | Default
+ --- | --- | --- | ---
+`channel` | `enum` | `stable`, `beta`, `dev` | `stable`
+`platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
+`architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
+`format` | `enum` | `tgz`, `zip` (only allowed if `platform` is `darwin`) | `tgz`
+`install-path` | `string` | | `/usr/local/bin`
 
 ## Executors
 ### `default`
