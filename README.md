@@ -128,7 +128,7 @@ Parameter | Type | Allowed values | Default
 `platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
 `architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
 `format` | `enum` | `tgz`, `zip` (only allowed if `platform` is `darwin`) | `tgz`
-`install-path` | `string` | | `/usr/local/bin`
+`install_path` | `string` | | `/usr/local/bin`
 
 ## Executors
 ### `default`

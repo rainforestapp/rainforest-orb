@@ -1,4 +1,4 @@
-description: Validate parameter is a number
+description: Validate parameter is a positive integer
 parameters:
   key:
     description: The name of the parameter to validate

@@ -1,16 +1,16 @@
 description: Install the Rainforest QA CLI
 parameters:
-  install-path:
-    description: Where to install the CLI
+  install_path:
+    description: Where to install the CLI.
     type: string
     default: /usr/local/bin
   channel:
-    description: The version of the CLI to install
+    description: The version of the CLI to install.
     type: enum
     enum: ["stable", "beta", "dev"]
     default: stable
   platform:
-    description: Which platform to install the CLI for
+    description: Which platform to install the CLI for.
     type: enum
     enum: ["darwin", "linux"]
     default: linux
@@ -21,7 +21,7 @@ parameters:
     enum: ["zip", "tgz"]
     default: tgz
   architecture:
-    description: 386 (32-bit) or amd64 (64-bit)?
+    description: 386 (32-bit) or amd64 (64-bit).
     type: enum
     enum: ["386", "amd64"]
     default: amd64
@@ -43,10 +43,10 @@ steps:
 
         if [ << parameters.format >> = "tgz" ] ; then
           wget $url
-          tar xvf $file -C << parameters.install-path >>
+          tar xvf $file -C << parameters.install_path >>
         elif [ << parameters.format >> = "zip" && << parameters.platform >> = "darwin" ] ; then
           curl -O $url
-          unzip $file -d << parameters.install-path >>
+          unzip $file -d << parameters.install_path >>
         else
           echo "Invalid platform/format << parameters.platform >>/<< parameters.format >>" 1>&2
           exit 1
