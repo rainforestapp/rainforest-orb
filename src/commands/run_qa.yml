@@ -52,7 +52,7 @@ steps:
         fi
 
         # Validate environment_id
-        if [ -n << parameters.environment_id >> ] ; then
+        if [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^\d+$' ; then
             echo "Error: << parameters.environment_id >> not a positive integer"
             exit 1
@@ -60,7 +60,7 @@ steps:
         fi
 
         # Validate conflict
-        if [ -n << parameters.conflict >> ] ; then
+        if [ -n "<< parameters.conflict >>" ] ; then
           if ! echo "abort abort-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
             echo "Error: << parameters.conflict >> not in (abort abort-all)"
             exit 1
@@ -68,7 +68,7 @@ steps:
         fi
 
         # Validate crowd
-        if [ -n << parameters.crowd >> ] ; then
+        if [ -n "<< parameters.crowd >>" ] ; then
           if ! echo "default automation on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
             echo "Error: << parameters.crowd >> not in (default automation on_premise_crowd)"
             exit 1
