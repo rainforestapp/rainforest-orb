@@ -1,37 +1,27 @@
 version: 2.1
 orbs:
-  cli: circleci/circleci-cli@0.1.5
   orb-tools: circleci/orb-tools@8.27.4
 
-jobs:
-  validate_orb:
-    executor: cli/default
-    steps:
-      - checkout
-      - orb-tools/validate:
-          orb-path: src/orb.yml
-
 workflows:
-  btd:
+  lint-pack_validate_publish-dev:
     jobs:
-      - validate_orb:
-          filters:
-            branches:
-              ignore:
-                - master
-
+      - orb-tools/lint
+      - orb-tools/pack:
+          requires:
+            - orb-tools/lint
       - orb-tools/publish-dev:
+          requires:
+            - orb-tools/pack
           filters:
             branches:
               only:
                 - master
-          checkout: true
           orb-name: rainforest-qa/rainforest
-          orb-path: src/orb.yml
           publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
-          validate: true
 
-      - orb-tools/publish:
+  release:
+    jobs:
+      - orb-tools/pack:
           filters:
             branches:
               ignore:
@@ -39,7 +29,8 @@ workflows:
             tags:
               only:
                 - /^v\d+\.\d+\.\d+$/
-          orb-path: src/orb.yml
+      - orb-tools/publish:
+          requires:
+            - orb-tools/pack
           orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG:1}
           publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
-          validate: true

@@ -1,0 +1,10 @@
+description: Latest Rainforest CLI Docker image
+docker:
+  - image: gcr.io/rf-public-images/rainforest-cli:<< parameters.tag >>
+parameters:
+  tag:
+    description: |
+      A tag pointing to an older version of the Rainforest CLI Docker image.
+      A list of tags can be found at https://gcr.io/rf-public-images/rainforest-cli.
+    type: string
+    default: latest

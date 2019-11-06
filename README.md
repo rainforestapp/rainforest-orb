@@ -1,5 +1,15 @@
 # Rainforest QA CircleCI Orb
-`v0.1.0`
+**Registry homepage:** [`rainforest-qa/rainforest@0.1.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
+
+> This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
+
+## Sections
+* [Prerequisites](##Prerequisites)
+* [Base Usage](##Base%20Usage)
+* [Optional Parameters](##Optional%20Parameters)
+* [Commands](##Commands)
+* [Executors](##Executors)
+* [Examples](##Examples)
 
 ## Prerequisites
 
@@ -23,10 +33,13 @@ Once you have a run group which contains at least one test (included either dire
 ```yaml
 # .circleci/config.yml
 
+# To use orbs, your CircleCI config file must use version 2.1
+version: 2.1
+
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@0.0.1
+  - rainforest: rainforest-qa/rainforest@0.1.0
 
 # In your workflows, add it as a job to be run
 workflows:
@@ -45,10 +58,10 @@ An arbitrary string to associate with the run.
 `string`
 #### Default behavior
 The default value defined in the orb is:
-> `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date +'%Y-%m-%d_%H-%M-%S')"`
+> `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
 
-This means that if no `description` parameter is passed in and your repository is named `my_repo`, the Circle build is `#42` on the `my_feature_branch` branch, and the current time is noon on January 20th, 2021; then the created run's description will be:
-> `my_repo - my_feature_branch 42 2021-01-20_12-00-00`
+This means that if no `description` parameter is passed in and your repository is named `my_repo`, the Circle build is `#42` on the `my_feature_branch` branch, and the current time (in UTC) is noon on January 20th, 2021; then the created run's description will be:
+> `my_repo - my_feature_branch 42 2021-01-20T12:00:00Z`
 
 ### `environment_id`
 Use a specific environment for this run.
@@ -105,17 +118,24 @@ Any executor which has the Rainforest CLI installed will work.
 #### Default behavior
 A Docker image with the latest version of the Rainforest CLI installed will be used.
 
+## Commands
+### `install`
+Install the Rainforest CLI
+#### Parameters
+Parameter | Type | Allowed values | Default
+ --- | --- | --- | ---
+`channel` | `enum` | `stable`, `beta`, `dev` | `stable`
+`platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
+`architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
+`install_path` | `string` | | `/usr/local/bin`
+
 ## Executors
 ### `default`
 A Docker image with the latest version of the Rainforest CLI installed.
-### Parameters
-#### `tag`
-##### Type
-`string`
-##### Allowed values
-See [list of tags](https://gcr.io/rf-public-images/rainforest-cli).
-##### Default behavior
-The `latest` tag is used.
+#### Parameters
+Parameter | Type | Allowed values | Default Behavior
+ --- | --- | --- | ---
+ `tag` | `string` | See [list of tags](https://gcr.io/rf-public-images/rainforest-cli). | The `latest` tag is used.
 
 ## Examples
 ### Using all parameters

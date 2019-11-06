@@ -1,0 +1,16 @@
+description: Validate parameter is a positive integer
+parameters:
+  key:
+    description: The name of the parameter to validate
+    type: string
+  value:
+    description: The value of the parameter to validate
+    type: string
+steps:
+  - run:
+      name: Verify << parameters.key >> is a number
+      command: |
+        if ! echo "<< parameters.value >>" | grep -Eq '^\d+$' ; then
+          echo "Error: << parameters.value >> not a number"
+          exit 1
+        fi

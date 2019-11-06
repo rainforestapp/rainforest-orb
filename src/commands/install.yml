@@ -1,0 +1,39 @@
+description: Install the Rainforest QA CLI
+parameters:
+  install_path:
+    description: Where to install the CLI.
+    type: string
+    default: /usr/local/bin
+  channel:
+    description: The version of the CLI to install.
+    type: enum
+    enum: ["stable", "beta", "dev"]
+    default: stable
+  platform:
+    description: Which platform to install the CLI for.
+    type: enum
+    enum: ["darwin", "linux"]
+    default: linux
+  architecture:
+    description: 386 (32-bit) or amd64 (64-bit).
+    type: enum
+    enum: ["386", "amd64"]
+    default: amd64
+steps:
+  - run:
+      name: Get download URL
+      command: |
+        url="https://bin.equinox.io/c"
+        file="rainforest-cli"
+        case << parameters.channel >> in
+          stable) url="$url/htRtQZagtfg"; file="$file-stable";;
+          beta) url="$url/csTtrGrMBYr"; file="$file-beta";;
+          dev) url="$url/6dz6cwxHnZ8"; file="$file-dev";;
+          *) echo "Invalid channel << parameters.channel >>" 1>&2; exit 1;;
+        esac
+
+        file="$file-<< parameters.platform >>-<< parameters.architecture >>.tgz"
+        url="$url/$file"
+
+        wget $url
+        tar xvf $file -C << parameters.install_path >>
