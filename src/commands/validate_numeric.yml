@@ -10,7 +10,7 @@ steps:
   - run:
       name: Verify << parameters.key >> is a number
       command: |
-        if ! echo "<< parameters.value >>" | grep -Eq '^[0-9]+$' ; then
+        if ! echo "<< parameters.value >>" | grep -Eq '^\d+$' ; then
           echo "Error: << parameters.value >> not a number"
           exit 1
         fi

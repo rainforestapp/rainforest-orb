@@ -13,7 +13,7 @@ steps:
   - run:
       name: Verify << parameters.key >> is an allowed value
       command: |
-        if ! echo "<< parameters.enum >>" | grep -Eq "(^|[[:space:]])"<< parameters.value >>"($|[[:space:]])" ; then
+        if ! echo "<< parameters.enum >>" | grep -Eq "\b"<< parameters.value >>"\b" ; then
           echo "Error: << parameters.value >> not in << parameters.enum >>"
           exit 1
         fi
