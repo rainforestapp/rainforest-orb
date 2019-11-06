@@ -127,7 +127,6 @@ Parameter | Type | Allowed values | Default
 `channel` | `enum` | `stable`, `beta`, `dev` | `stable`
 `platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
 `architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
-`format` | `enum` | `tgz`, `zip` (only allowed if `platform` is `darwin`) | `tgz`
 `install_path` | `string` | | `/usr/local/bin`
 
 ## Executors

@@ -14,12 +14,6 @@ parameters:
     type: enum
     enum: ["darwin", "linux"]
     default: linux
-  format:
-    description: |
-      What compression format to download. Linux must use tgz. MacOS (Darwin) can choose either tgz or zip.
-    type: enum
-    enum: ["zip", "tgz"]
-    default: tgz
   architecture:
     description: 386 (32-bit) or amd64 (64-bit).
     type: enum
@@ -38,16 +32,8 @@ steps:
           *) echo "Invalid channel << parameters.channel >>" 1>&2; exit 1;;
         esac
 
-        file="$file-<< parameters.platform >>-<< parameters.architecture >>.<< parameters.format >>"
+        file="$file-<< parameters.platform >>-<< parameters.architecture >>.tgz"
         url="$url/$file"
 
-        if [ << parameters.format >> = "tgz" ] ; then
-          wget $url
-          tar xvf $file -C << parameters.install_path >>
-        elif [ << parameters.format >> = "zip" && << parameters.platform >> = "darwin" ] ; then
-          curl -O $url
-          unzip $file -d << parameters.install_path >>
-        else
-          echo "Invalid platform/format << parameters.platform >>/<< parameters.format >>" 1>&2
-          exit 1
-        fi
+        wget $url
+        tar xvf $file -C << parameters.install_path >>
