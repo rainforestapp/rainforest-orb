@@ -30,6 +30,10 @@ workflows:
               only:
                 - /^v\d+\.\d+\.\d+$/
       - orb-tools/publish:
+          filters:
+            tags:
+              only:
+                - /^v\d+\.\d+\.\d+$/
           requires:
             - orb-tools/pack
           orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG:1}
