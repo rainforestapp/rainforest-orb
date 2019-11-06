@@ -41,26 +41,26 @@ steps:
       command: |
         # Validate token
         if ! [ ${<< parameters.token >>} ] ; then
-          echo "Error: << parameters.token >> not set"
+          echo "Error: Token not set"
           exit 1
         fi
 
         # Validate run_group_id
         if ! echo "<< parameters.run_group_id >>" | grep -Eq '^\d+$' ; then
-          echo "Error: << parameters.run_group_id >> not a positive integer"
+          echo "Error: run_group_id not a positive integer (<< parameters.run_group_id >>)"
           exit 1
         fi
 
         # Validate environment_id
-        if [ -n << parameters.environment_id >> ] ; then
+        if [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^\d+$' ; then
-            echo "Error: << parameters.environment_id >> not a positive integer"
+            echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
             exit 1
           fi
         fi
 
         # Validate conflict
-        if [ -n << parameters.conflict >> ] ; then
+        if [ -n "<< parameters.conflict >>" ] ; then
           if ! echo "abort abort-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
             echo "Error: << parameters.conflict >> not in (abort abort-all)"
             exit 1
@@ -68,7 +68,7 @@ steps:
         fi
 
         # Validate crowd
-        if [ -n << parameters.crowd >> ] ; then
+        if [ -n "<< parameters.crowd >>" ] ; then
           if ! echo "default automation on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
             echo "Error: << parameters.crowd >> not in (default automation on_premise_crowd)"
             exit 1
@@ -80,7 +80,7 @@ steps:
           --token "${<< parameters.token >>}" \
           --description "<< parameters.description >>" \
           --run-group "<< parameters.run_group_id >>" \
-          <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
-          <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
-          <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
+          <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" \ <</ parameters.environment_id >>
+          <<# parameters.conflict >> --conflict "<< parameters.conflict >>" \ <</ parameters.conflict >>
+          <<# parameters.crowd >> --crowd "<< parameters.crowd >>" \ <</ parameters.crowd >>
           --release "<< parameters.release >>"
