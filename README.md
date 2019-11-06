@@ -28,7 +28,7 @@ Run groups are a way to group tests that should be run together (for example, a 
 
 Once you have a run group which contains at least one test (included either directly in the run group or via a Feature added to the run group), you can run it in CircleCI builds using this orb. You will need its ID (visible at the end of the run group URL: `https://app.rainforestqa.com/run_groups/<ID>`).
 
-## Base usage
+## Base usage (`rainforest/run` job)
 
 ```yaml
 # .circleci/config.yml
@@ -128,6 +128,21 @@ Parameter | Type | Allowed values | Default
 `platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
 `architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
 `install_path` | `string` | | `/usr/local/bin`
+
+### `run_qa`
+Start a new Rainforest run
+#### Parameters
+For more information regarding these parameters, see [Optional Parameters](##Optional%20Parameters).
+
+Parameter | Type | Required | Allowed values | Default
+ --- | --- | --- | --- | --- |
+description | `string` | | any string | `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
+run_group_id | `string` | ✓ | string evaluating to a positive integer | —
+environment_id | `string` | | string evaluating to a positive integer | `""`
+conflict | `string` | | `abort` `abort-all` | `""`
+crowd | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
+release | `string` | | any string | `"$CIRCLE_SHA1"`
+token | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 
 ## Executors
 ### `default`
