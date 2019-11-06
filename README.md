@@ -90,7 +90,7 @@ The crowd to use for this run.
 Value | Behavior | Requirements
 --- | --- | ---
 `default` | Run against our global crowd of testers.
-`automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in <abbr title="Rainforest Test Language">RTL</abbr>.<br />- No tests use a Plain Language action.
+`automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in Rainforest Test Language (RTL).<br />- No tests use a Plain Language action.
 `on_premise_crowd` | Run against your internal testers. | - On-premise is enabled for your account.
 #### Default behavior
 If no `crowd` parameter is passed in, the created run will run against the run group's default crowd.
