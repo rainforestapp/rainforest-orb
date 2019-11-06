@@ -43,44 +43,11 @@ parameters:
 executor: <<parameters.executor>>
 
 steps:
-  - run:
-      name: Verify Rainforest API token is available
-      command: |
-        if ! [ ${<< parameters.token >>} ] ; then
-          echo "Error: << parameters.token >> not set"
-          exit 1
-        fi
-  - validate_numeric:
-      key: run_group_id
-      value: << parameters.run_group_id >>
-  - when:
-      condition: << parameters.environment_id >>
-      steps:
-        - validate_numeric:
-            key: environment_id
-            value: << parameters.environment_id >>
-  - when:
-      condition: << parameters.conflict >>
-      steps:
-        - validate_enum:
-            key: conflict
-            value: << parameters.conflict >>
-            enum: abort abort-all
-  - when:
-      condition: << parameters.crowd >>
-      steps:
-        - validate_enum:
-            key: crowd
-            value: << parameters.crowd >>
-            enum: default automation on_premise_crowd
-  - run:
-      name: Run Rainforest
-      command: |
-        rainforest-cli run \
-          --token "${<< parameters.token >>}" \
-          --description "<< parameters.description >>" \
-          --run-group "<< parameters.run_group_id >>" \
-          <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
-          <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
-          <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
-          --release "<< parameters.release >>"
+  - run_qa:
+      description: << parameters.description >>
+      run_group_id: << parameters.run_group_id >>
+      environment_id: << parameters.environment_id >>
+      conflict: << parameters.conflict >>
+      crowd: << parameters.crowd >>
+      release: << parameters.release >>
+      token: << parameters.token >>

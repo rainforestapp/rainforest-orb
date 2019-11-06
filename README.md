@@ -1,5 +1,5 @@
 # Rainforest QA CircleCI Orb
-**Registry homepage:** [`rainforest-qa/rainforest@0.1.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
+**Registry homepage:** [`rainforest-qa/rainforest@0.2.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
 
 > This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
 
@@ -28,7 +28,7 @@ Run groups are a way to group tests that should be run together (for example, a 
 
 Once you have a run group which contains at least one test (included either directly in the run group or via a Feature added to the run group), you can run it in CircleCI builds using this orb. You will need its ID (visible at the end of the run group URL: `https://app.rainforestqa.com/run_groups/<ID>`).
 
-## Base usage
+## Base usage (`rainforest/run` job)
 
 ```yaml
 # .circleci/config.yml
@@ -39,7 +39,7 @@ version: 2.1
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@0.1.0
+  - rainforest: rainforest-qa/rainforest@0.2.0
 
 # In your workflows, add it as a job to be run
 workflows:
@@ -90,7 +90,7 @@ The crowd to use for this run.
 Value | Behavior | Requirements
 --- | --- | ---
 `default` | Run against our global crowd of testers.
-`automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in <abbr title="Rainforest Test Language">RTL</abbr>.<br />- No tests use a Plain Language action.
+`automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in Rainforest Test Language (RTL).<br />- No tests use a Plain Language action.
 `on_premise_crowd` | Run against your internal testers. | - On-premise is enabled for your account.
 #### Default behavior
 If no `crowd` parameter is passed in, the created run will run against the run group's default crowd.
@@ -128,6 +128,21 @@ Parameter | Type | Allowed values | Default
 `platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
 `architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
 `install_path` | `string` | | `/usr/local/bin`
+
+### `run_qa`
+Start a new Rainforest run
+#### Parameters
+For more information regarding these parameters, see [Optional Parameters](##Optional%20Parameters).
+
+Parameter | Type | Required | Allowed values | Default
+ --- | --- | --- | --- | --- |
+description | `string` | | any string | `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
+run_group_id | `string` | ✓ | string evaluating to a positive integer | —
+environment_id | `string` | | string evaluating to a positive integer | `""`
+conflict | `string` | | `abort` `abort-all` | `""`
+crowd | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
+release | `string` | | any string | `"$CIRCLE_SHA1"`
+token | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 
 ## Executors
 ### `default`
