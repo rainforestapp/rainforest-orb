@@ -36,5 +36,6 @@ workflows:
                 - /^v\d+\.\d+\.\d+$/
           requires:
             - orb-tools/pack
+          attach-workspace: true
           orb-ref: rainforest-qa/rainforest@${CIRCLE_TAG:1}
           publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
