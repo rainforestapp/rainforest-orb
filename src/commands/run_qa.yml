@@ -35,6 +35,11 @@ parameters:
     type: env_var_name
     default: RAINFOREST_TOKEN
 
+  dry_run:
+    description: Set to true to run parameter validations without starting a new Rainforest run
+    type: boolean
+    default: false
+
 steps:
   - run:
       name: Run Rainforest
@@ -75,12 +80,14 @@ steps:
           fi
         fi
 
-        # Create the run
-        rainforest-cli run \
-          --token "${<< parameters.token >>}" \
-          --description "<< parameters.description >>" \
-          --run-group "<< parameters.run_group_id >>" \
-          <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
-          <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
-          <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
-          --release "<< parameters.release >>"
+        if ! << parameters.dry_run >> ; then
+          # Create the run
+          rainforest-cli run \
+            --token "${<< parameters.token >>}" \
+            --description "<< parameters.description >>" \
+            --run-group "<< parameters.run_group_id >>" \
+            <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
+            <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
+            <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
+            --release "<< parameters.release >>"
+        fi

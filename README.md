@@ -109,6 +109,14 @@ This is not your Rainforest API token, but the name of the environment variable 
 #### Default behavior
 If no `token` parameter is passed in, the `RAINFOREST_TOKEN` environment variable is assumed to contain your Rainforest QA API token.
 
+### `dry_run`
+Set to `true` to run parameter validations without actually starting a run in Rainforest.
+#### Type
+`boolean`
+#### Default behavior
+If no `dry_run` parameter is passed in, the run will be started in Rainforest.
+
+
 ### `executor`
 The executor to run the `rainforest/run` CircleCI job in.
 #### Type
@@ -143,6 +151,7 @@ Parameter | Type | Required | Allowed values | Default
 `crowd` | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
+`dry_run` | `boolean` | | `true` `false` | `false`
 
 ## Executors
 ### `default`
