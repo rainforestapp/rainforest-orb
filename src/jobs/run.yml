@@ -35,6 +35,11 @@ parameters:
     type: env_var_name
     default: RAINFOREST_TOKEN
 
+  dry_run:
+    description: Set to true to run parameter validations without starting a new Rainforest run
+    type: boolean
+    default: false
+
   executor:
     description: The executor to run this command in
     type: executor
@@ -51,3 +56,4 @@ steps:
       crowd: << parameters.crowd >>
       release: << parameters.release >>
       token: << parameters.token >>
+      dry_run: << parameters.dry_run >>

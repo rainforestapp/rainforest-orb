@@ -1,5 +1,5 @@
 # Rainforest QA CircleCI Orb
-**Registry homepage:** [`rainforest-qa/rainforest@0.2.4`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
+**Registry homepage:** [`rainforest-qa/rainforest@1.0.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
 
 > This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
 
@@ -39,7 +39,7 @@ version: 2.1
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@0.2.4
+  - rainforest: rainforest-qa/rainforest@1.0.0
 
 # In your workflows, add it as a job to be run
 workflows:
@@ -109,6 +109,14 @@ This is not your Rainforest API token, but the name of the environment variable 
 #### Default behavior
 If no `token` parameter is passed in, the `RAINFOREST_TOKEN` environment variable is assumed to contain your Rainforest QA API token.
 
+### `dry_run`
+Set to `true` to run parameter validations without actually starting a run in Rainforest.
+#### Type
+`boolean`
+#### Default behavior
+If no `dry_run` parameter is passed in, the run will be started in Rainforest.
+
+
 ### `executor`
 The executor to run the `rainforest/run` CircleCI job in.
 #### Type
@@ -136,13 +144,14 @@ For more information regarding these parameters, see [Optional Parameters](##Opt
 
 Parameter | Type | Required | Allowed values | Default
  --- | --- | --- | --- | --- |
-description | `string` | | any string | `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
-run_group_id | `string` | ✓ | string evaluating to a positive integer | —
-environment_id | `string` | | string evaluating to a positive integer | `""`
-conflict | `string` | | `abort` `abort-all` | `""`
-crowd | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
-release | `string` | | any string | `"$CIRCLE_SHA1"`
-token | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
+`description` | `string` | | any string | `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
+`run_group_id` | `string` | ✓ | string evaluating to a positive integer | —
+`environment_id` | `string` | | string evaluating to a positive integer | `""`
+`conflict` | `string` | | `abort` `abort-all` | `""`
+`crowd` | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
+`release` | `string` | | any string | `"$CIRCLE_SHA1"`
+`token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
+`dry_run` | `boolean` | | `true` `false` | `false`
 
 ## Executors
 ### `default`
