@@ -44,6 +44,9 @@ steps:
   - run:
       name: Run Rainforest
       command: |
+        # Ensure results directory is there
+        mkdir -p ~/results/rainforest
+
         # Validate token
         if [ -z "${<< parameters.token >>}" ] ; then
           echo "Error: Token not set"
@@ -90,5 +93,10 @@ steps:
             <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
-            --release "<< parameters.release >>"
+            --release "<< parameters.release >>" \
+            --junit-file ~/results/rainforest/results.xml
         fi
+  - store_test_results:
+      path: ~/results
+  - store_artifacts:
+      path: ~/results
