@@ -83,6 +83,7 @@ steps:
         if ! << parameters.dry_run >> ; then
           # Create the run
           rainforest-cli run \
+            --skip-update \
             --token "${<< parameters.token >>}" \
             --description "<< parameters.description >>" \
             --run-group "<< parameters.run_group_id >>" \
