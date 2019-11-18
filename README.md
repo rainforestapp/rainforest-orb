@@ -91,6 +91,7 @@ Value | Behavior | Requirements
 --- | --- | ---
 `default` | Run against our global crowd of testers.
 `automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in Rainforest Test Language (RTL).<br />- No tests use a Plain Language action.
+`automation_and_crowd` | Run against our automation agent where possible, fall back to the crowd of testers. | - Automation and mixed runs are enabled for your account.
 `on_premise_crowd` | Run against your internal testers. | - On-premise is enabled for your account.
 #### Default behavior
 If no `crowd` parameter is passed in, the created run will run against the run group's default crowd.
@@ -148,7 +149,7 @@ Parameter | Type | Required | Allowed values | Default
 `run_group_id` | `string` | ✓ | string evaluating to a positive integer | —
 `environment_id` | `string` | | string evaluating to a positive integer | `""`
 `conflict` | `string` | | `abort` `abort-all` | `""`
-`crowd` | `string` | | `default` `automation` `on_premise_crowd` | `"default"`
+`crowd` | `string` | | `default` `automation` `automation_and_crowd` `on_premise_crowd` | `"default"`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
