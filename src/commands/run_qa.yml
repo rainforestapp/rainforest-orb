@@ -74,8 +74,8 @@ steps:
 
         # Validate crowd
         if [ -n "<< parameters.crowd >>" ] ; then
-          if ! echo "default automation on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
-            echo "Error: << parameters.crowd >> not in (default automation on_premise_crowd)"
+          if ! echo "default automation automation_and_crowd on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
+            echo "Error: << parameters.crowd >> not in (default automation automation_and_crowd on_premise_crowd)"
             exit 1
           fi
         fi
