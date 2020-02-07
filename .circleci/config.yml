@@ -21,7 +21,7 @@ jobs:
       - run:
           name: Is the CLI present, is it from the stable channel
           command: |
-            /usr/local/bin/rainforest --skip-update --version | tee /tmp/rf-version
+            /usr/local/bin/rainforest-cli --skip-update --version | tee /tmp/rf-version
             grep 'stable channel' /tmp/rf-version
 
 workflows:
