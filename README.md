@@ -10,6 +10,7 @@
 * [Commands](##Commands)
 * [Executors](##Executors)
 * [Examples](##Examples)
+* [Orb Release Process](##Orb Release Process)
 
 ## Prerequisites
 
@@ -192,3 +193,23 @@ workflows:
                 - master
           run_group_id: "123"
 ```
+
+## Orb Release Process
+This section describes the release process for the orb itself:
+1. Create a feature branch and do your work
+1. Update the version in the repo: `git grep -z -l -F 1.1.0 | xargs -0 sed -i -e 's/1.1.0/1.2.0/g'`
+1. Push the feature branch to Github to kick off the
+   `lint-pack_validate_publish-dev` workflow in CircleCI. This may fail in
+   CircleCI with the error "Cannot find rainforest-qa/rainforest@dev:dev:alpha
+   in the orb registry". Fix this by running `circleci orb publish src/@orb.yml
+   rainforest-qa/rainforest@dev:alpha` and rerun the build
+1. When the `lint-pack_validate_publish-dev` workflow completes successfully,
+   it will trigger the `integration-tests_prod-release` workflow to test the
+   orb
+1. If the `integration-tests_prod-release` workflow passes, get review and
+   merge to master
+1. Tag master with the version: `git checkout master && git pull && git tag vX.Y.Z && git push origin vX.Y.Z`
+
+If you want to run an integration test against Rainforest, create a new branch
+in the Rainforest repo and update the `.circleci/config.yml` to use the dev
+version of the orb and add a job to kick-off a Rainforest run.

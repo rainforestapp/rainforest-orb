@@ -1,9 +1,37 @@
 version: 2.1
+
 orbs:
-  orb-tools: circleci/orb-tools@8.27.4
+  orb-tools: circleci/orb-tools@9.0.0
+  rf: rainforest-qa/rainforest@<<pipeline.parameters.dev-orb-version>>
+
+parameters:
+  dev-orb-version:
+    default: 'dev:alpha'
+    type: string
+  run-integration-tests:
+    default: false
+    type: boolean
+
+jobs:
+  integration-tests-for-your-orb:
+    executor: rf/default
+    steps:
+      - rf/install:
+          architecture: "386"
+      - run:
+          name: Is the CLI present, is it from the stable channel
+          command: |
+            /usr/local/bin/rainforest --skip-update --version | tee /tmp/rf-version
+            grep 'stable channel' /tmp/rf-version
 
 workflows:
+  integration-tests_prod-release:
+    when: << pipeline.parameters.run-integration-tests >>
+    jobs:
+      - integration-tests-for-your-orb
+
   lint-pack_validate_publish-dev:
+    unless: << pipeline.parameters.run-integration-tests >>
     jobs:
       - orb-tools/lint
       - orb-tools/pack:
@@ -12,14 +40,16 @@ workflows:
       - orb-tools/publish-dev:
           requires:
             - orb-tools/pack
-          filters:
-            branches:
-              only:
-                - master
           orb-name: rainforest-qa/rainforest
           publish-token-variable: CIRCLE_ORG_ADMIN_TOKEN
+      - orb-tools/trigger-integration-tests-workflow:
+          name: trigger-integration-dev
+          token-variable: CIRCLE_ORG_ADMIN_TOKEN
+          requires:
+            - orb-tools/publish-dev
 
   release:
+    unless: << pipeline.parameters.run-integration-tests >>
     jobs:
       - orb-tools/pack:
           filters:
