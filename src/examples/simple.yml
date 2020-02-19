@@ -3,7 +3,7 @@ description: Run tests from a specific run group
 usage:
   version: 2.1
   orbs:
-    rainforest: rainforest-qa/rainforest@1.1.0
+    rainforest: rainforest-qa/rainforest@1.2.0
   workflows:
     build:
       jobs:
