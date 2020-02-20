@@ -37,3 +37,4 @@ steps:
 
         wget $url
         tar xvf $file -C << parameters.install_path >>
+        mv << parameters.install_path >>/rainforest << parameters.install_path >>/rainforest-cli
