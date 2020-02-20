@@ -4,13 +4,13 @@
 > This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
 
 ## Sections
-* [Prerequisites](##Prerequisites)
-* [Base Usage](##Base%20Usage)
-* [Optional Parameters](##Optional%20Parameters)
-* [Commands](##Commands)
-* [Executors](##Executors)
-* [Examples](##Examples)
-* [Orb Release Process](##Orb%20Release%20Process)
+* [Prerequisites](#prerequisites)
+* [Base Usage](#base-usage-rainforestrun-job)
+* [Optional Parameters](#optional-parameters)
+* [Commands](#commands)
+* [Executors](#executors)
+* [Examples](#examples)
+* [Orb Release Process](#orb-release-process)
 
 ## Prerequisites
 
