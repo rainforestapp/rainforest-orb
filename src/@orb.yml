@@ -5,5 +5,5 @@ description: |
   Prerequisites:
     - a Rainforest QA account (https://app.rainforestqa.com/trial)
     - a Rainforest QA API token (https://app.rainforestqa.com/settings/integrations)
-    - a RunGroup with some tests (https://app.rainforestqa.com/tests)
+    - a RunGroup with some tests (https://app.rainforestqa.com/run_groups)
   Orb repo (fleshed out README and full source code): https://github.com/rainforestapp/rainforest-orb
