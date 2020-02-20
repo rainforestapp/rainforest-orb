@@ -10,7 +10,7 @@
 * [Commands](##Commands)
 * [Executors](##Executors)
 * [Examples](##Examples)
-* [Orb Release Process](##Orb Release Process)
+* [Orb Release Process](##Orb%20Release%20Process)
 
 ## Prerequisites
 
