@@ -15,6 +15,9 @@ parameters:
 jobs:
   integration-tests-for-your-orb:
     executor: rf/default
+    environment:
+      TOP_SECRET_TOKEN: 'MY_SECRET_PASSWORD'
+      TOP_SECRET_TOKEN_WITH_SPACES: 'MY SECRET PASSWORD'
     steps:
       - rf/install:
           architecture: "386"
@@ -23,6 +26,36 @@ jobs:
           command: |
             /usr/local/bin/rainforest-cli --skip-update --version | tee /tmp/rf-version
             grep 'stable channel' /tmp/rf-version
+      - rf/run_qa:
+        # Check run group validation
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
+      - rf/run_qa:
+        # Validate tokens with spaces in without blowing up
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN_WITH_SPACES'
+          run_group_id: '123'
+      - rf/run_qa:
+        # Check environment_id is validated
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
+          environment_id: '1234'
+      - rf/run_qa:
+        # Check conflict with abort is validated
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
+          environment_id: '1234'
+          conflict: abort
+      - rf/run_qa:
+        # Check conflict with abort-all is validated
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
+          environment_id: '1234'
+          conflict: abort-all
 
 workflows:
   integration-tests_prod-release:

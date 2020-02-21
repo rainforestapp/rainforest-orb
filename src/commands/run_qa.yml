@@ -45,20 +45,20 @@ steps:
       name: Run Rainforest
       command: |
         # Validate token
-        if ! [ ${<< parameters.token >>} ] ; then
+        if [ -z "${<< parameters.token >>}" ] ; then
           echo "Error: Token not set"
           exit 1
         fi
 
         # Validate run_group_id
-        if ! echo "<< parameters.run_group_id >>" | grep -Eq '^\d+$' ; then
+        if ! echo "<< parameters.run_group_id >>" | grep -Eq '^[0-9]+$' ; then
           echo "Error: run_group_id not a positive integer (<< parameters.run_group_id >>)"
           exit 1
         fi
 
         # Validate environment_id
         if [ -n "<< parameters.environment_id >>" ] ; then
-          if ! echo "<< parameters.environment_id >>" | grep -Eq '^\d+$' ; then
+          if ! echo "<< parameters.environment_id >>" | grep -Eq '^[0-9]+$' ; then
             echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
             exit 1
           fi

@@ -1,5 +1,6 @@
-# Rainforest QA CircleCI Orb
-**Registry homepage:** [`rainforest-qa/rainforest@1.2.0`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
+# Rainforest QA CircleCI Orb ![](https://img.shields.io/github/v/release/rainforestapp/rainforest-orb.svg)
+
+**Registry homepage:** [`rainforest-qa/rainforest`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
 
 > This is the Rainforest QA [Orb](https://circleci.com/docs/2.0/orb-intro/) for CircleCI, it allows you to easily kick off a Rainforest run from your CircleCI workflows, to make sure that every release passes your Rainforest integration tests.
 
