@@ -15,6 +15,8 @@ parameters:
 jobs:
   integration-tests-for-your-orb:
     executor: rf/default
+    environment:
+      TOP_SECRET_TOKEN: 'MY_SECRET_PASSWORD'
     steps:
       - rf/install:
           architecture: "386"
@@ -23,6 +25,10 @@ jobs:
           command: |
             /usr/local/bin/rainforest-cli --skip-update --version | tee /tmp/rf-version
             grep 'stable channel' /tmp/rf-version
+      - rf/run_qa:
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
 
 workflows:
   integration-tests_prod-release:
