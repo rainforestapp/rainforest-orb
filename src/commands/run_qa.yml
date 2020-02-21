@@ -45,7 +45,7 @@ steps:
       name: Run Rainforest
       command: |
         # Validate token
-        if ! [ ${<< parameters.token >>} ] ; then
+        if [ -z "${<< parameters.token >>}" ] ; then
           echo "Error: Token not set"
           exit 1
         fi

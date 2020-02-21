@@ -17,6 +17,7 @@ jobs:
     executor: rf/default
     environment:
       TOP_SECRET_TOKEN: 'MY_SECRET_PASSWORD'
+      TOP_SECRET_TOKEN_WITH_SPACES: 'MY SECRET PASSWORD'
     steps:
       - rf/install:
           architecture: "386"
@@ -28,6 +29,10 @@ jobs:
       - rf/run_qa:
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
+          run_group_id: '123'
+      - rf/run_qa:
+          dry_run: true
+          token: 'TOP_SECRET_TOKEN_WITH_SPACES'
           run_group_id: '123'
 
 workflows:
