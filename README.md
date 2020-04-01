@@ -41,7 +41,7 @@ version: 2.1
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@1.2.1
+  - rainforest: rainforest-qa/rainforest@1.2.2
 
 # In your workflows, add it as a job to be run
 workflows:
