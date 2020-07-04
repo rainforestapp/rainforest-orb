@@ -40,6 +40,10 @@ parameters:
     type: boolean
     default: false
 
+  pipeline_id:
+    description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
+    type: string
+
   executor:
     description: The executor to run this command in
     type: executor
@@ -48,6 +52,10 @@ parameters:
 executor: <<parameters.executor>>
 
 steps:
+  - restore_cache:
+      keys:
+        - rainforest-run-{{ .Revision }}-{{ .BuildNum }}
+        - rainforest-run-{{ .Revision }}-
   - run_qa:
       description: << parameters.description >>
       run_group_id: << parameters.run_group_id >>
@@ -57,3 +65,11 @@ steps:
       release: << parameters.release >>
       token: << parameters.token >>
       dry_run: << parameters.dry_run >>
+      pipeline_id: << parameters.pipeline_id >>
+  - save_run_id:
+      pipeline_id: << parameters.pipeline_id >>
+  - save_cache:
+      when: on_fail
+      key: rainforest-run-{{ .Revision }}-{{ .BuildNum }}
+      paths:
+        - ~/pipeline

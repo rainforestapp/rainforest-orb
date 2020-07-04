@@ -31,17 +31,20 @@ jobs:
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
+          pipeline_id: << pipeline.id >>
       - rf/run_qa:
         # Validate tokens with spaces in without blowing up
           dry_run: true
           token: 'TOP_SECRET_TOKEN_WITH_SPACES'
           run_group_id: '123'
+          pipeline_id: << pipeline.id >>
       - rf/run_qa:
         # Check environment_id is validated
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
           environment_id: '1234'
+          pipeline_id: << pipeline.id >>
       - rf/run_qa:
         # Check conflict with abort is validated
           dry_run: true
@@ -49,6 +52,7 @@ jobs:
           run_group_id: '123'
           environment_id: '1234'
           conflict: abort
+          pipeline_id: << pipeline.id >>
       - rf/run_qa:
         # Check conflict with abort-all is validated
           dry_run: true
@@ -56,6 +60,7 @@ jobs:
           run_group_id: '123'
           environment_id: '1234'
           conflict: abort-all
+          pipeline_id: << pipeline.id >>
 
 workflows:
   integration-tests_prod-release:

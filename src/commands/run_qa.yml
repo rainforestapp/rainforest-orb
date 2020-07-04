@@ -40,6 +40,10 @@ parameters:
     type: boolean
     default: false
 
+  pipeline_id:
+    description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
+    type: string
+
 steps:
   - run:
       name: Run Rainforest
@@ -58,6 +62,31 @@ steps:
           exit 1
         fi
 
+        # Validate conflict
+        if [ -n "<< parameters.conflict >>" ] ; then
+          if ! echo "abort abort-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
+            echo "Error: << parameters.conflict >> not in (abort abort-all)"
+            exit 1
+          fi
+        fi
+
+        # Check for rerun
+        if [ -n "<< parameters.pipeline_id >>" ] && [ -f ~/pipeline/<< parameters.pipeline_id >> ] ; then
+          export RAINFOREST_RUN_ID=$(cat ~/pipeline/<< parameters.pipeline_id >>)
+          echo "Rerunning Run ${RAINFOREST_RUN_ID}"
+
+          if ! << parameters.dry_run >> ; then
+            # Create the rerun
+            rainforest-cli rerun \
+              --skip-update \
+              --token "${<< parameters.token >>}" \
+              <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
+              --junit-file ~/results/rainforest/results.xml
+          fi
+
+          exit 0
+        fi
+
         # Validate run_group_id
         if ! echo "<< parameters.run_group_id >>" | grep -Eq '^[0-9]+$' ; then
           echo "Error: run_group_id not a positive integer (<< parameters.run_group_id >>)"
@@ -68,14 +97,6 @@ steps:
         if [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^[0-9]+$' ; then
             echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
-            exit 1
-          fi
-        fi
-
-        # Validate conflict
-        if [ -n "<< parameters.conflict >>" ] ; then
-          if ! echo "abort abort-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
-            echo "Error: << parameters.conflict >> not in (abort abort-all)"
             exit 1
           fi
         fi

@@ -1,0 +1,24 @@
+description: Save Pipeline and RF Run ID
+
+parameters:
+  pipeline_id:
+    description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
+    type: string
+
+  when:
+    description: When to run the steps in this command (always, on_success, or on_fail). Default is on_fail
+    type: enum
+    enum: ["always", "on_fail", "on_success"]
+    default: on_fail
+
+steps:
+  - run:
+      name: Install xmllint
+      command: apk add libxml2-utils
+      when: << parameters.when >>
+  - run:
+      name: Save Pipeline and RF Run ID
+      command: |
+        mkdir ~/pipeline
+        xmllint --xpath "string(testsuite/@id)" ~/results/rainforest/results.xml > ~/pipeline/<< parameters.pipeline_id >>
+      when: << parameters.when >>
