@@ -41,7 +41,7 @@ version: 2.1
 # If you don't have a top-level `orbs` section, add one
 orbs:
 # Add the Rainforest orb to that list
-  - rainforest: rainforest-qa/rainforest@1.3.1
+  - rainforest: rainforest-qa/rainforest@2.0.0
 
 # In your workflows, add it as a job to be run
 workflows:
@@ -233,7 +233,7 @@ This section describes the release process for the orb itself:
    orb
 1. If the `integration-tests_prod-release` workflow passes, get review and
    merge to master
-1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v1.3.1`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
+1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v2.0.0`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
 
 If you want to run an integration test against Rainforest, create a new branch
 in the Rainforest repo and update the `.circleci/config.yml` to use the dev
