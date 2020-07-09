@@ -19,6 +19,6 @@ steps:
   - run:
       name: Save Pipeline and RF Run ID
       command: |
-        mkdir ~/pipeline
+        mkdir -p ~/pipeline
         xmllint --xpath "string(testsuite/@id)" ~/results/rainforest/results.xml > ~/pipeline/<< parameters.pipeline_id >>
       when: << parameters.when >>
