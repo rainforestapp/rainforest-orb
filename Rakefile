@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-VERSION = Gem::Version.new('1.3.0')
+VERSION = Gem::Version.new('2.0.0')
 
 def components
   # changes [1, 3] to [1, 3, 0]
@@ -10,7 +10,7 @@ end
 def update(*version)
   old_version = VERSION.version
   new_version = version.map(&:to_s).join('.')
-  `git grep -z -l -F #{old_version} | xargs -0 sed -i -e 's/#{old_version}/#{new_version}/g'`
+  `git grep -z -l -F #{old_version} | xargs -0 ruby -pi -e "gsub(/#{old_version}/, '#{new_version}')"`
 end
 
 namespace :update do
