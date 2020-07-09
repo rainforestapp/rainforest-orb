@@ -20,5 +20,11 @@ steps:
       name: Save Pipeline and RF Run ID
       command: |
         mkdir -p ~/pipeline
-        xmllint --xpath "string(testsuite/@id)" ~/results/rainforest/results.xml > ~/pipeline/<< parameters.pipeline_id >>
+        RESULTS_FILE=~/results/rainforest/results.xml
+        PIPELINE_FILE=~/pipeline/<< parameters.pipeline_id >>
+        if [ -f ${RESULTS_FILE} ] ; then
+          xmllint --xpath "string(testsuite/@id)" ${RESULTS_FILE} > ${PIPELINE_FILE}
+        else
+          > ${PIPELINE_FILE}
+        fi
       when: << parameters.when >>
