@@ -48,7 +48,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 2.0.0
+        ORB_VERSION: 2.0.1
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -71,7 +71,7 @@ steps:
         fi
 
         # Check for rerun
-        if [ -n "<< parameters.pipeline_id >>" ] && [ -f ~/pipeline/<< parameters.pipeline_id >> ] ; then
+        if [ -n "<< parameters.pipeline_id >>" ] && [ -s ~/pipeline/<< parameters.pipeline_id >> ] ; then
           export RAINFOREST_RUN_ID=$(cat ~/pipeline/<< parameters.pipeline_id >>)
           echo "Rerunning Run ${RAINFOREST_RUN_ID}"
 
