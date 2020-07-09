@@ -50,7 +50,6 @@ jobs:
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
-          environment_id: '1234'
           conflict: abort
           pipeline_id: << pipeline.id >>
       - rf/run_qa:
@@ -58,7 +57,6 @@ jobs:
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
-          environment_id: '1234'
           conflict: abort-all
           pipeline_id: << pipeline.id >>
 
