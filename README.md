@@ -168,15 +168,15 @@ Parameter | Type | Required | Allowed values | Default
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
-`pipeline_id` | `string` | ✓ | any string | -
+`pipeline_id` | `string` | ✓ | any string | —
 
 ### `save_run_id`
 Save the created run ID to the CircleCI cache
 #### Parameters
 Parameter | Type | Required | Allowed values | Default
  --- | --- | --- | --- | --- |
-`pipeline_id` | `string` | ✓ | any string | -
-`when` | `enum` | | `always` `on_success` `on_fail`
+`pipeline_id` | `string` | ✓ | any string | —
+`when` | `enum` | | `always` `on_success` `on_fail` | `on_fail`
 
 ## Executors
 ### `default`
