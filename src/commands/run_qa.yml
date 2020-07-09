@@ -122,7 +122,10 @@ steps:
             --release "<< parameters.release >>" \
             --junit-file ~/results/rainforest/results.xml
         fi
-  - store_test_results:
-      path: ~/results
-  - store_artifacts:
-      path: ~/results
+  - unless:
+      condition: << parameters.dry_run >>
+      steps:
+        - store_test_results:
+            path: ~/results
+        - store_artifacts:
+            path: ~/results
