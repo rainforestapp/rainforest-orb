@@ -50,7 +50,6 @@ workflows:
       - rainforest/run:
           # Replace the value with the ID of whichever run group you want to run
           run_group_id: "123"
-          pipeline_id: << pipeline.id >>
 ```
 
 ## Optional Parameters
@@ -131,14 +130,14 @@ Any executor which has the Rainforest CLI installed will work.
 A Docker image with the latest version of the Rainforest CLI installed will be used.
 
 ## Rerunning failed tests
-To enable rerunning failed Rainforest tests when rerunning a failed Circle build, all you need to do is pass in the [pipeline ID](https://circleci.com/docs/2.0/configuration-reference/#using-pipeline-values) (`<< pipeline.id >>`) as the `pipeline_id` parameter to the `rainforest/run` job. Alternatively, if you are using the `rainforest/run_qa` command, you'll need to add the `rainforest/save_run_id` command in an ensuing step, passing in the same `pipeline_id` parameter.
+When using the `rainforest/run` job, rerunning only failed Rainforest tests when rerunning a failed Circle build is enabled by default. Alternatively, if you are using the `rainforest/run_qa` command, you'll need to add the `rainforest/save_run_id` command in an ensuing step.
 
 \ | Rerun from failed | Rerun from start
 --- | --- | ---
 Rainforest run failed | reruns failed tests | reruns failed tests
 Rainforest run passed | N/A | reruns failed tests
 
-If you want to always run the full Rainforest run, pass in a unique value to `pipeline_id`, for example, `"${CIRCLE_BUILD_NUM}"`.
+If you want to always run the full Rainforest run, pass in a unique value to the `pipeline_id` parameter (for either the `run` job or `run_qa` command), for example, `"${CIRCLE_BUILD_NUM}"`.
 
 If you want to run the full Rainforest run for a single failed build, then you will need to kick off a new pipeline.
 
@@ -168,14 +167,14 @@ Parameter | Type | Required | Allowed values | Default
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
-`pipeline_id` | `string` | ✓ | any string | —
+`pipeline_id` | `string` | | any string | `<< pipeline.id >>`
 
 ### `save_run_id`
 Save the created run ID to the CircleCI cache
 #### Parameters
 Parameter | Type | Required | Allowed values | Default
  --- | --- | --- | --- | --- |
-`pipeline_id` | `string` | ✓ | any string | —
+`pipeline_id` | `string` | | any string | `<< pipeline.id >>`
 `when` | `enum` | | `always` `on_success` `on_fail` | `on_fail`
 
 ## Executors
@@ -216,7 +215,6 @@ workflows:
               only:
                 - master
           run_group_id: "123"
-          pipeline_id: << pipeline.id >>
 ```
 
 ## Orb Release Process

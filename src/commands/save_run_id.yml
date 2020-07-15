@@ -4,6 +4,7 @@ parameters:
   pipeline_id:
     description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
     type: string
+    default: << pipeline.id >>
 
   when:
     description: When to run the steps in this command (always, on_success, or on_fail). Default is on_fail
