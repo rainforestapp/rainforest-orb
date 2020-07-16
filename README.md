@@ -131,7 +131,14 @@ Any executor which has the Rainforest CLI installed will work.
 A Docker image with the latest version of the Rainforest CLI installed will be used.
 
 ## Rerunning failed tests
-To enable rerunning failed Rainforest tests when rerunning a failed Circle build, all you need to do is pass in the [pipeline ID](https://circleci.com/docs/2.0/configuration-reference/#using-pipeline-values) (`<< pipeline.id >>`) as the `pipeline_id` parameter to the `rainforest/run` job. Alternatively, if you are using the `rainforest/run_qa` command, you'll need to add the `rainforest/save_run_id` command in an ensuing step, passing in the same `pipeline_id` parameter.
+The Rainforest Orb uses CircleCI's cache and pipeline concept to know when a build is being rerun. In order for the orb to know within which pipeline it is being executed, you must pass in the [pipeline ID](https://circleci.com/docs/2.0/configuration-reference/#using-pipeline-values) (`<< pipeline.id >>`) to the `pipeline_id` parameter (available on both the `run` job and `run_qa` command).
+
+### Using the `run_qa` command
+When using the command, you will need to explicitly define some of the logic [taken care of for you by the job](src/jobs/run.yml):
+- restoring from CircleCI cache before the `run_qa` step
+- saving the created run's ID when it fails (you can use the `save_run_id` command for this)
+- saving the run ID to the CircleCI cache for it to be restored by the next workflow in the pipeline.
+
 
 \ | Rerun from failed | Rerun from start
 --- | --- | ---
