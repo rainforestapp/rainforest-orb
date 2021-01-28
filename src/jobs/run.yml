@@ -40,6 +40,11 @@ parameters:
     type: boolean
     default: false
 
+  background:
+    description: Do not wait for a rainforest run to complete before exiting
+    type: boolean
+    default: false
+
   pipeline_id:
     description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
     type: string
@@ -66,6 +71,7 @@ steps:
       token: << parameters.token >>
       dry_run: << parameters.dry_run >>
       pipeline_id: << parameters.pipeline_id >>
+      background: << parameters.background >>
   - save_run_id:
       pipeline_id: << parameters.pipeline_id >>
   - save_cache:
