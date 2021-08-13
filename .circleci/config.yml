@@ -6,7 +6,7 @@ orbs:
 
 parameters:
   dev-orb-version:
-    default: '3'
+    default: dev:alpha
     type: string
   run-integration-tests:
     default: false
