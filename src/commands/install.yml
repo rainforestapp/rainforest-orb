@@ -4,11 +4,10 @@ parameters:
     description: Where to install the CLI.
     type: string
     default: /usr/local/bin
-  channel:
-    description: The version of the CLI to install.
-    type: enum
-    enum: ["stable", "beta", "dev"]
-    default: stable
+  version:
+    description: Which (v-prefixed) version of the CLI to install. Defaults to the latest.
+    type: string
+    default: ""
   platform:
     description: Which platform to install the CLI for.
     type: enum
@@ -21,20 +20,17 @@ parameters:
     default: amd64
 steps:
   - run:
-      name: Get download URL
+      name: Download and set up executable
       command: |
-        url="https://bin.equinox.io/c"
-        file="rainforest-cli"
-        case << parameters.channel >> in
-          stable) url="$url/htRtQZagtfg"; file="$file-stable";;
-          beta) url="$url/csTtrGrMBYr"; file="$file-beta";;
-          dev) url="$url/6dz6cwxHnZ8"; file="$file-dev";;
-          *) echo "Invalid channel << parameters.channel >>" 1>&2; exit 1;;
-        esac
+        release_url=https://api.github.com/repos/rainforestapp/rainforest-cli/releases
+        if [ -n "<< parameters.version >>" ]; then
+          release_url="$release_url/tags/<< parameters.version >>"
+        else
+          release_url="$release_url/latest"
+        fi
+        echo $release_url
 
-        file="$file-<< parameters.platform >>-<< parameters.architecture >>.tgz"
-        url="$url/$file"
+        asset_url=$(curl $release_url | jq -r '.assets[].browser_download_url' | grep << parameters.platform >>-<< parameters.architecture >>)
 
-        wget $url
-        tar xvf $file -C << parameters.install_path >>
-        mv << parameters.install_path >>/rainforest << parameters.install_path >>/rainforest-cli
+        wget $asset_url -O rainforest-cli.tgz
+        tar xvf rainforest-cli.tgz -C << parameters.install_path >>

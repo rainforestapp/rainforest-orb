@@ -152,13 +152,18 @@ If you want to run the full Rainforest run for a single failed build, then you w
 ## Commands
 ### `install`
 Install the Rainforest CLI
+
+#### Requirements
+This command requires you to have [`jq`](https://stedolan.github.io/jq/) installed.
 #### Parameters
 Parameter | Type | Allowed values | Default
  --- | --- | --- | ---
-`channel` | `enum` | `stable`, `beta`, `dev` | `stable`
+`version` | `string` | `vX.Y.Z`* | `""` (latest)
 `platform` | `enum` | `darwin` (MacOS), `linux` | `linux`
 `architecture` | `enum` | `386` (32-bit), `amd64` (64-bit) | `amd64`
 `install_path` | `string` | | `/usr/local/bin`
+
+&ast; You can find a list of releases [here](https://github.com/rainforestapp/rainforest-cli/releases). The version must be greater than or equal to `v2.19.1`. All prior versions to not have downloadable assets available to install.
 
 ### `run_qa`
 Start a new Rainforest run
