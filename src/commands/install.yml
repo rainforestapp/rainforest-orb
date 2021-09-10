@@ -29,7 +29,7 @@ steps:
         if [ -n "<< parameters.channel >>" ]; then
           echo "The 'channel' parameter is deprecated, please remove it from your configuration."
           echo "If you'd like to use a specific version, use the new 'version' parameter instead."
-          echo "See https://github.com/rainforestapp/rainforest-orb/releases/tag/v3.0.0 for more info."
+          echo "See https://github.com/rainforestapp/rainforest-orb/releases/tag/v3.0.1 for more info."
           exit 1
         fi
   - run:
