@@ -8,4 +8,5 @@ usage:
     build:
       jobs:
         - rainforest/run:
+            pipeline_id: << pipeline.id >>
             run_group_id: "123"
