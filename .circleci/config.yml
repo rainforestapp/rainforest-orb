@@ -22,12 +22,12 @@ jobs:
       - run: apk add curl jq wget
       - rf/install:
           architecture: "386"
-          version: v2.19.1
+          version: v2.22.3
       - run:
           name: Is the CLI present, is it at the requested version
           command: |
             /usr/local/bin/rainforest --skip-update --version | tee /tmp/rf-version
-            grep '2.19.1' /tmp/rf-version
+            grep '2.22.3' /tmp/rf-version
       - rf/install:
           architecture: "386"
       - run:
