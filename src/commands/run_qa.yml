@@ -82,7 +82,7 @@ steps:
 
           if ! << parameters.dry_run >> ; then
             # Create the rerun
-            rainforest-cli rerun \
+            rainforest rerun \
               --skip-update \
               --token "${<< parameters.token >>}" \
               <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
@@ -117,7 +117,7 @@ steps:
 
         if ! << parameters.dry_run >> ; then
           # Create the run
-          rainforest-cli run \
+          rainforest run \
             --skip-update \
             --token "${<< parameters.token >>}" \
             --description "<< parameters.description >>" \
