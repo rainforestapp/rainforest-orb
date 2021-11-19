@@ -1,4 +1,4 @@
-# Rainforest QA CircleCI Orb ![](https://img.shields.io/github/v/release/rainforestapp/rainforest-orb.svg)
+# <img src="./logo.svg" height="32px" /> Rainforest QA CircleCI Orb ![](https://img.shields.io/github/v/release/rainforestapp/rainforest-orb.svg)
 
 **Registry homepage:** [`rainforest-qa/rainforest`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
 
@@ -17,7 +17,7 @@
 
 ### A Rainforest QA account
 
-If you don't already have one, we have a free trial that you can sign up for [here](https://app.rainforestqa.com/trial).
+If you don't already have one, you can sign up for a free account [here](https://app.rainforestqa.com/auth/signup?utm_source=github&utm_medium=readme&utm_campaign=circleci).
 
 ### A Rainforest QA API token
 
@@ -26,9 +26,9 @@ Do not expose this token in your `circleci/.config.yml` file. Instead, [use an e
 
 ### A run group with at least one test
 
-Run groups are a way to group tests that should be run together (for example, a smoke suite you might want to run on every deploy). For more information on run groups, see [this help article](https://help.rainforestqa.com/en/articles/3230981-run-groups).
+Run groups are a way to group tests that should be run together (for example, a smoke suite you might want to run on every deploy). For more information on run groups, see [this help article](https://help.rainforestqa.com/docs/organizing-tests-by-run-group).
 
-Once you have a run group which contains at least one test (included either directly in the run group or via a Feature added to the run group), you can run it in CircleCI builds using this orb. You will need its ID (visible at the end of the run group URL: `https://app.rainforestqa.com/run_groups/<ID>`).
+Once you have a run group which contains at least one enabled test, you can run it in CircleCI builds using this orb. You will need its ID (visible at the end of the run group URL: `https://app.rainforestqa.com/run_groups/<ID>`).
 
 ## Base usage (`rainforest/run` job)
 
@@ -80,10 +80,10 @@ How we should handle currently active runs.
 #### Allowed values
 Value | Behavior
 --- | ---
-`abort` | Abort all other runs in the same environment.
-`abort-all` | Abort all other runs, regardless of environment.
+`abort` | Cancel all other runs in the same environment.
+`abort-all` | Cancel all other runs, regardless of environment.
 #### Default behavior
-If no `conflict` parameter is passed in, then no active runs will be aborted.
+If no `conflict` parameter is passed in, then no active runs will be canceled.
 
 ### `crowd`
 The crowd to use for this run.
@@ -93,8 +93,8 @@ The crowd to use for this run.
 Value | Behavior | Requirements
 --- | --- | ---
 `default` | Run against our global crowd of testers.
-`automation` | Run against our automation agent. | - Automation is enabled for your account.<br />- All tests in the run group are written in Rainforest Test Language (RTL).<br />- No tests use a Plain Language action.
-`automation_and_crowd` | Run against our automation agent where possible, fall back to the crowd of testers. | - Automation and mixed runs are enabled for your account.
+`automation` | Run against our automation agent. | - All tests in the run group are written with the Visual Editor.<br />- No tests use a Tester Instruction/Confirmation action.
+`automation_and_crowd` | Run against our automation agent where possible, fall back to the crowd of testers.
 `on_premise_crowd` | Run against your internal testers. | - On-premise is enabled for your account.
 #### Default behavior
 If no `crowd` parameter is passed in, the created run will run against the run group's default crowd.
