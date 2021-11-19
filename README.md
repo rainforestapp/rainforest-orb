@@ -1,4 +1,4 @@
-# Rainforest QA CircleCI Orb ![](https://img.shields.io/github/v/release/rainforestapp/rainforest-orb.svg)
+# <img src="./logo.svg" height="32px" /> Rainforest QA CircleCI Orb ![](https://img.shields.io/github/v/release/rainforestapp/rainforest-orb.svg)
 
 **Registry homepage:** [`rainforest-qa/rainforest`](https://circleci.com/orbs/registry/orb/rainforest-qa/rainforest)
 
