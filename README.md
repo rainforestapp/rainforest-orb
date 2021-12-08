@@ -67,11 +67,18 @@ This means that if no `description` parameter is passed in and your repository i
 > `my_repo - my_feature_branch 42 2021-01-20T12:00:00Z`
 
 ### `environment_id`
-Use a specific environment for this run.
+Use a specific environment for this run. _This parameter will be ignored if the `custom_url` parameter is also passed in._
 #### Type
 `string`
 #### Default behavior
 If no `environment_id` parameter is passed in, the created run will use the Run Group's default environment.
+
+### `custom_url`
+Use a specific URL (via a [temporary environment](https://github.com/rainforestapp/rainforest-cli#command-line-options)) for this run.
+#### Type
+`string`
+#### Default behavior
+If no `custom_url` parameter is passed in, the created run will use the Run Group's default environment.
 
 ### `conflict`
 How we should handle currently active runs.
@@ -175,6 +182,7 @@ Parameter | Type | Required | Allowed values | Default
 `description` | `string` | | any string | `"$CIRCLE_PROJECT_REPONAME - $CIRCLE_BRANCH $CIRCLE_BUILD_NUM $(date -u +'%FT%TZ')"`
 `run_group_id` | `string` | ✓ | string evaluating to a positive integer | —
 `environment_id` | `string` | | string evaluating to a positive integer | `""`
+`custom_url` | `string` | | string evaluating to a URL | `""`
 `conflict` | `string` | | `abort` `abort-all` | `""`
 `crowd` | `string` | | `default` `automation` `automation_and_crowd` `on_premise_crowd` | `"default"`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
@@ -238,6 +246,6 @@ This section describes the release process for the orb itself:
 1. Push the feature branch to Github to kick off the `lint-pack_validate_publish-dev` workflow in CircleCI.
 1. When the `lint-pack_validate_publish-dev` workflow completes successfully, it will trigger the `integration-tests_prod-release` workflow to test the orb.
 1. If the `integration-tests_prod-release` workflow passes, get review and merge to master.
-1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v3.0.3`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
+1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v3.1.0`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
 
 If you want to run an integration test against Rainforest, create a new branch in the Rainforest repo and update the `.circleci/config.yml` to use the dev version of the orb and add a job to kick-off a Rainforest run.

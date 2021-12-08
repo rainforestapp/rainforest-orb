@@ -15,6 +15,11 @@ parameters:
     type: string
     default: ""
 
+  custom_url:
+    description: Use a specific URL for this run
+    type: string
+    default: ""
+
   conflict:
     description: How other currently in-progress runs should be handled. Values are `abort` to abort runs in the same environment as your new run and `abort-all` to abort all runs
     type: string
@@ -65,6 +70,7 @@ steps:
       description: << parameters.description >>
       run_group_id: << parameters.run_group_id >>
       environment_id: << parameters.environment_id >>
+      custom_url: << parameters.custom_url >>
       conflict: << parameters.conflict >>
       crowd: << parameters.crowd >>
       release: << parameters.release >>
