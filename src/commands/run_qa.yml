@@ -15,6 +15,11 @@ parameters:
     type: string
     default: ""
 
+  custom_url:
+    description: Use a specific URL for this run
+    type: string
+    default: ""
+
   conflict:
     description: How other currently in-progress runs should be handled. Values are `abort` to abort runs in the same environment as your new run and `abort-all` to abort all runs
     type: string
@@ -100,8 +105,13 @@ steps:
           exit 1
         fi
 
-        # Validate environment_id
-        if [ -n "<< parameters.environment_id >>" ] ; then
+        # Set custom_url, or validate and set environment_id
+        if [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.custom_url >>" ] ; then
+          RUN_COMMAND="${RUN_COMMAND} --custom-url \"<< parameters.custom_url >>\""
+          if [ -n "<< parameters.environment_id >>" ] ; then
+            echo "Warning: Environment ID ignored. You've set values for the mutually exclusive custom_url and environment_id parameters. Unset one of these to fix this warning."
+          fi
+        elif [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^[0-9]+$' ; then
             echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
             exit 1
