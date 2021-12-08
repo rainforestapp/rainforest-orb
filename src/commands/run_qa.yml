@@ -87,7 +87,8 @@ steps:
               --token "${<< parameters.token >>}" \
               <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
               --background="<< parameters.background >>" \
-              --junit-file ~/results/rainforest/results.xml
+              --junit-file ~/results/rainforest/results.xml \
+              --save-run-id ~/.rainforest_run_id
           fi
 
           exit 0
@@ -127,7 +128,8 @@ steps:
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
-            --junit-file ~/results/rainforest/results.xml
+            --junit-file ~/results/rainforest/results.xml \
+            --save-run-id ~/.rainforest_run_id
         fi
   - unless:
       condition: << parameters.dry_run >>

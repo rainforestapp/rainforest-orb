@@ -13,18 +13,10 @@ parameters:
 
 steps:
   - run:
-      name: Install xmllint
-      command: apk add libxml2-utils
-      when: << parameters.when >>
-  - run:
       name: Save Pipeline and RF Run ID
       command: |
         mkdir -p ~/pipeline
-        RESULTS_FILE=~/results/rainforest/results.xml
+        RUN_ID_FILE=~/.rainforest_run_id
         PIPELINE_FILE=~/pipeline/<< parameters.pipeline_id >>
-        if [ -f ${RESULTS_FILE} ] ; then
-          xmllint --xpath "string(testsuite/@id)" ${RESULTS_FILE} > ${PIPELINE_FILE}
-        else
-          > ${PIPELINE_FILE}
-        fi
+        cat ${RUN_ID_FILE} > ${PIPELINE_FILE}
       when: << parameters.when >>
