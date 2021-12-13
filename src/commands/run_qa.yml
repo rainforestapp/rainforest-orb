@@ -58,7 +58,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 3.1.0
+        ORB_VERSION: 3.1.1
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -107,7 +107,6 @@ steps:
 
         # Set custom_url, or validate and set environment_id
         if [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.custom_url >>" ] ; then
-          RUN_COMMAND="${RUN_COMMAND} --custom-url \"<< parameters.custom_url >>\""
           if [ -n "<< parameters.environment_id >>" ] ; then
             echo "Warning: Environment ID ignored. You've set values for the mutually exclusive custom_url and environment_id parameters. Unset one of these to fix this warning."
           fi
@@ -133,6 +132,7 @@ steps:
             --token "${<< parameters.token >>}" \
             --description "<< parameters.description >>" \
             --run-group "<< parameters.run_group_id >>" \
+            <<# parameters.custom_url >> --custom-url "<< parameters.custom_url >>" <</ parameters.custom_url >> \
             <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
