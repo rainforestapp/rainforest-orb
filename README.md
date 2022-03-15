@@ -87,8 +87,8 @@ How we should handle currently active runs.
 #### Allowed values
 Value | Behavior
 --- | ---
-`abort` | Cancel all other runs in the same environment.
-`abort-all` | Cancel all other runs, regardless of environment.
+`cancel` | Cancel all other runs in the same environment.
+`cancel-all` | Cancel all other runs, regardless of environment.
 #### Default behavior
 If no `conflict` parameter is passed in, then no active runs will be canceled.
 
@@ -183,7 +183,7 @@ Parameter | Type | Required | Allowed values | Default
 `run_group_id` | `string` | ✓ | string evaluating to a positive integer | —
 `environment_id` | `string` | | string evaluating to a positive integer | `""`
 `custom_url` | `string` | | string evaluating to a URL | `""`
-`conflict` | `string` | | `abort` `abort-all` | `""`
+`conflict` | `string` | | `cancel` `cancel-all` | `""`
 `crowd` | `string` | | `default` `automation` `automation_and_crowd` `on_premise_crowd` | `"default"`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
@@ -216,7 +216,7 @@ workflows:
           run_group_id: "123"
           description: Smoke suite
           environment_id: "456"
-          conflict: abort-all
+          conflict: cancel-all
           crowd: automation
           release: $CIRCLE_TAG
           token: RAINFOREST_QA_API_TOKEN

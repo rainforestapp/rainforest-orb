@@ -57,18 +57,18 @@ jobs:
           environment_id: '1234'
           pipeline_id: << pipeline.id >>
       - rf/run_qa:
-        # Check conflict with abort is validated
+        # Check conflict with cancel is validated
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
-          conflict: abort
+          conflict: cancel
           pipeline_id: << pipeline.id >>
       - rf/run_qa:
-        # Check conflict with abort-all is validated
+        # Check conflict with cancel-all is validated
           dry_run: true
           token: 'TOP_SECRET_TOKEN'
           run_group_id: '123'
-          conflict: abort-all
+          conflict: cancel-all
           pipeline_id: << pipeline.id >>
 
 workflows:

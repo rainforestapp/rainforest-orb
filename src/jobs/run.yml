@@ -21,7 +21,7 @@ parameters:
     default: ""
 
   conflict:
-    description: How other currently in-progress runs should be handled. Values are `abort` to abort runs in the same environment as your new run and `abort-all` to abort all runs
+    description: How other currently in-progress runs should be handled. Values are `cancel` to cancel runs in the same environment as your new run and `cancel-all` to cancel all runs
     type: string
     default: ""
 
