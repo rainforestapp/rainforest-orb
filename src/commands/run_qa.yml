@@ -63,7 +63,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 3.3.0
+        ORB_VERSION: 3.3.1
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
