@@ -50,6 +50,11 @@ parameters:
     type: boolean
     default: false
 
+  junit_path:
+    description: Folder under ~/results to store the JUnit results.xml file
+    type: string
+    default: "rainforest"
+
   pipeline_id:
     description: The CircleCI Pipeline ID ( << pipeline.id >> ), used to rerun only failed tests when a CircleCI workflow is rerun
     type: string
@@ -64,7 +69,7 @@ steps:
         echo "Using Rainforest Orb v${ORB_VERSION}"
 
         # Ensure results directory is there
-        mkdir -p ~/results/rainforest
+        mkdir -p ~/results/<< parameters.junit_path >>
 
         # Validate token
         if [ -z "${<< parameters.token >>}" ] ; then
@@ -92,7 +97,7 @@ steps:
               --token "${<< parameters.token >>}" \
               <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
               --background="<< parameters.background >>" \
-              --junit-file ~/results/rainforest/results.xml \
+              --junit-file ~/results/<< parameters.junit_path >>/results.xml \
               --save-run-id ~/.rainforest_run_id
           fi
 
@@ -138,7 +143,7 @@ steps:
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
-            --junit-file ~/results/rainforest/results.xml \
+            --junit-file ~/results/<< parameters.junit_path >>/results.xml \
             --save-run-id ~/.rainforest_run_id
         fi
   - unless:

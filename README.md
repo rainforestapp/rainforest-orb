@@ -141,7 +141,7 @@ A Docker image with the latest version of the Rainforest CLI installed will be u
 The Rainforest Orb uses CircleCI's cache and pipeline concept to know when a build is being rerun. In order for the orb to know within which pipeline it is being executed, you must pass in the [pipeline ID](https://circleci.com/docs/2.0/configuration-reference/#using-pipeline-values) (`<< pipeline.id >>`) to the `pipeline_id` parameter (available on both the `run` job and `run_qa` command).
 
 ## Starting multiple Rainforest runs in a single workflow
-If the same workflow calls the `run` job more than once, you will need to pass in the `cache_key` parameter to the extra call sites. This will ensure that the right run is rerun when rerunning the workflow.
+If the same workflow calls the `run` job more than once, you will need to pass in the `cache_key` and `junit_path` parameters to the extra call sites. This will ensure that all runs are properly triggered and that results for each run are stored separately.
 
 ```yaml
 workflows:
@@ -152,6 +152,7 @@ workflows:
       - rainforest/run:
         # ...
         cache_key: "rainforest-second-run-{{ .Revision }}-{{ .BuildNum }}"
+        junit_path: "rainforest_second_run"
 ```
 
 ### Using the `run_qa` command
