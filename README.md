@@ -140,6 +140,20 @@ A Docker image with the latest version of the Rainforest CLI installed will be u
 ## Rerunning failed tests
 The Rainforest Orb uses CircleCI's cache and pipeline concept to know when a build is being rerun. In order for the orb to know within which pipeline it is being executed, you must pass in the [pipeline ID](https://circleci.com/docs/2.0/configuration-reference/#using-pipeline-values) (`<< pipeline.id >>`) to the `pipeline_id` parameter (available on both the `run` job and `run_qa` command).
 
+## Starting multiple Rainforest runs in a single workflow
+If the same workflow calls the `run` job more than once, you will need to pass in the `cache_key` parameter to the extra call sites. This will ensure that the right run is rerun when rerunning the workflow.
+
+```yaml
+workflows:
+  your_workflow:
+    jobs:
+      - rainforest/run:
+        # ...
+      - rainforest/run:
+        # ...
+        cache_key: "rainforest-second-run-{{ .Revision }}-{{ .BuildNum }}"
+```
+
 ### Using the `run_qa` command
 When using the command, you will need to explicitly define some of the logic [taken care of for you by the job](src/jobs/run.yml):
 - restoring from CircleCI cache before the `run_qa` step
@@ -246,6 +260,6 @@ This section describes the release process for the orb itself:
 1. Push the feature branch to Github to kick off the `lint-pack_validate_publish-dev` workflow in CircleCI.
 1. When the `lint-pack_validate_publish-dev` workflow completes successfully, it will trigger the `integration-tests_prod-release` workflow to test the orb.
 1. If the `integration-tests_prod-release` workflow passes, get review and merge to master.
-1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v3.2.0`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
+1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v3.3.0`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
 
 If you want to run an integration test against Rainforest, create a new branch in the Rainforest repo and update the `.circleci/config.yml` to use the dev version of the orb and add a job to kick-off a Rainforest run.
