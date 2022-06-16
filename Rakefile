@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-VERSION = Gem::Version.new('3.3.1')
+VERSION = Gem::Version.new('3.3.2')
 
 def components
   # changes [1, 3] to [1, 3, 0]
