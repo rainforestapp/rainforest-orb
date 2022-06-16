@@ -62,7 +62,7 @@ parameters:
   cache_key:
     description: The cache key, used to store/restore a Rainforest Run ID
     type: string
-    default: "rainforest-run-{{ .Revision }}-{{ .BuildNum }}"
+    default: "rainforest-run-{{ .Revision }}"
 
   executor:
     description: The executor to run this command in
@@ -92,6 +92,6 @@ steps:
       pipeline_id: << parameters.pipeline_id >>
   - save_cache:
       when: on_fail
-      key: << parameters.cache_key >>
+      key: << parameters.cache_key >>-{{ .BuildNum }}
       paths:
         - ~/pipeline
