@@ -151,7 +151,7 @@ workflows:
         # ...
       - rainforest/run:
         # ...
-        cache_key: "rainforest-second-run-{{ .Revision }}-{{ .BuildNum }}"
+        cache_key: "rainforest-second-run-{{ .Revision }}"
         junit_path: "rainforest_second_run"
 ```
 
