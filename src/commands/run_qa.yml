@@ -63,7 +63,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 3.3.2
+        ORB_VERSION: 4.0.0
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -79,7 +79,7 @@ steps:
 
         # Validate conflict
         if [ -n "<< parameters.conflict >>" ] ; then
-          if ! echo "cancel cancel-all abort abort-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
+          if ! echo "cancel cancel-all" | grep -Eq "\b"<< parameters.conflict >>"\b" ; then
             echo "Error: << parameters.conflict >> not in (cancel cancel-all)"
             exit 1
           fi
