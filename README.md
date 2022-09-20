@@ -92,19 +92,19 @@ Value | Behavior
 #### Default behavior
 If no `conflict` parameter is passed in, then no active runs will be canceled.
 
-### `crowd`
-The crowd to use for this run.
+### `execution_method`
+The execution method to use for this run.
 #### Type
 `enum`
 #### Allowed values
 Value | Behavior | Requirements
 --- | --- | ---
-`default` | Run against our global crowd of testers.
 `automation` | Run against our automation agent. | - All tests in the run group are written with the Visual Editor.<br />- No tests use a Tester Instruction/Confirmation action.
+`crowd` | Run against our global crowd of testers.
 `automation_and_crowd` | Run against our automation agent where possible, fall back to the crowd of testers.
-`on_premise_crowd` | Run against your internal testers. | - On-premise is enabled for your account.
+`on_premise` | Run against your internal testers. | - On-premise is enabled for your account.
 #### Default behavior
-If no `crowd` parameter is passed in, the created run will run against the run group's default crowd.
+If no `execution_method` parameter is passed in, the created run will run against the run group's default execution method.
 
 ### `release`
 A string used to link a run to a release (for example, a `git` SHA or tag, a version number, a code name)
@@ -199,7 +199,7 @@ Parameter | Type | Required | Allowed values | Default
 `environment_id` | `string` | | string evaluating to a positive integer | `""`
 `custom_url` | `string` | | string evaluating to a URL | `""`
 `conflict` | `string` | | `cancel` `cancel-all` | `""`
-`crowd` | `string` | | `default` `automation` `automation_and_crowd` `on_premise_crowd` | `"default"`
+`execution_method` | `string` | | `automation` `crowd` `automation_and_crowd` `on_premise` | `""`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
@@ -232,7 +232,7 @@ workflows:
           description: Smoke suite
           environment_id: "456"
           conflict: cancel-all
-          crowd: automation
+          execution_method: automation
           release: $CIRCLE_TAG
           token: RAINFOREST_QA_API_TOKEN
           executor: my_custom_rainforest_executor
