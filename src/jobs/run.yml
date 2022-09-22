@@ -25,8 +25,13 @@ parameters:
     type: string
     default: ""
 
+  execution_method:
+    description: The execution method to use for this run
+    type: string
+    default: ""
+
   crowd:
-    description: The crowd to use for this run
+    description: "DEPRECATED: Use `execution_method` instead"
     type: string
     default: ""
 
@@ -81,6 +86,7 @@ steps:
       environment_id: << parameters.environment_id >>
       custom_url: << parameters.custom_url >>
       conflict: << parameters.conflict >>
+      execution_method: << parameters.execution_method >>
       crowd: << parameters.crowd >>
       release: << parameters.release >>
       token: << parameters.token >>

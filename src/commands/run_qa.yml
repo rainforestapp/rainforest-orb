@@ -25,8 +25,13 @@ parameters:
     type: string
     default: ""
 
+  execution_method:
+    description: The execution method to use for this run
+    type: string
+    default: ""
+
   crowd:
-    description: The crowd to use for this run
+    description: "DEPRECATED: Use `execution_method` instead"
     type: string
     default: ""
 
@@ -63,7 +68,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 4.0.0
+        ORB_VERSION: 4.1.0
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -122,8 +127,20 @@ steps:
           fi
         fi
 
-        # Validate crowd
-        if [ -n "<< parameters.crowd >>" ] ; then
+        # Validate execution_method / crowd
+        if [ -n "<< parameters.execution_method >>" ] ; then
+          if ! echo "automation crowd automation_and_crowd on_premise" | grep -Eq "\b"<< parameters.execution_method >>"\b" ; then
+            echo "Error: << parameters.execution_method >> not in (automation crowd automation_and_crowd on_premise)"
+            exit 1
+          fi
+        elif [ -n "<< parameters.crowd >>" ] ; then
+          echo "The 'crowd' parameter is deprecated, use 'execution_method' instead."
+
+          if [ -n "<< parameters.execution_method >>" ] ; then
+            echo "Error: execution_method and crowd are mutually exclusive"
+            exit 1
+          fi
+
           if ! echo "default automation automation_and_crowd on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
             echo "Error: << parameters.crowd >> not in (default automation automation_and_crowd on_premise_crowd)"
             exit 1
@@ -140,6 +157,7 @@ steps:
             <<# parameters.custom_url >> --custom-url "<< parameters.custom_url >>" <</ parameters.custom_url >> \
             <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
+            <<# parameters.execution_method >> --execution-method "<< parameters.execution_method >>" <</ parameters.execution_method >> \
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
