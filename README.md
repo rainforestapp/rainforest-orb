@@ -113,6 +113,13 @@ A string used to link a run to a release (for example, a `git` SHA or tag, a ver
 #### Default behavior
 If no `release` parameter is passed in, the SHA1 hash of the latest commit of the current build (obtained via the `CIRCLE_SHA1` environment variable) will be used.
 
+### `automation_max_retries`
+If set to a value > 0 and a test run using automation fails, it will be retried within the same run, up to that number of times.
+#### Type
+`string`
+#### Default behavior
+If no `automation_max_retries` parameter is passed in, the created run will use the Run Group's configured `automation_max_retries` setting.
+
 ### `token`
 This is not your Rainforest API token, but the name of the environment variable in which it is stored.
 #### Type
@@ -201,6 +208,7 @@ Parameter | Type | Required | Allowed values | Default
 `conflict` | `string` | | `cancel` `cancel-all` | `""`
 `execution_method` | `string` | | `automation` `crowd` `automation_and_crowd` `on_premise` | `""`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
+`automation_max_retries` | `string` | | string evaluating to a positive integer | `""`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
 `pipeline_id` | `string` | ✓ | any string | —

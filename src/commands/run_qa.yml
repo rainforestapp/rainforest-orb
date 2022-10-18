@@ -40,6 +40,11 @@ parameters:
     type: string
     default: "$CIRCLE_SHA1"
 
+  automation_max_retries:
+    description: If set to a value > 0 and a test run using automation fails, it will be retried within the same run, up to that number of times
+    type: string
+    default: ""
+
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
@@ -147,6 +152,13 @@ steps:
           fi
         fi
 
+        # Validate automation_max_retries
+        if [ -n "<< parameters.automation_max_retries >>" ] ; then
+          if ! echo "<< parameters.automation_max_retries >>" | grep -Eq '^[0-9]+$' ; then
+            error "automation_max_retries not a positive integer (<< parameters.automation_max_retries >>)"
+          fi
+        fi
+
         if ! << parameters.dry_run >> ; then
           # Create the run
           rainforest run \
@@ -159,6 +171,7 @@ steps:
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
             <<# parameters.execution_method >> --execution-method "<< parameters.execution_method >>" <</ parameters.execution_method >> \
             <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
+            <<# parameters.automation_max_retries >> --automation-max-retries "<< parameters.automation_max_retries >>" <</ parameters.automation_max_retries >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
             --junit-file ~/results/<< parameters.junit_path >>/results.xml \
