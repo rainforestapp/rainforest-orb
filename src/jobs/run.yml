@@ -30,11 +30,6 @@ parameters:
     type: string
     default: ""
 
-  crowd:
-    description: "DEPRECATED: Use `execution_method` instead"
-    type: string
-    default: ""
-
   release:
     description: Manually entered release information about the release the run is associated with
     type: string
@@ -92,7 +87,6 @@ steps:
       custom_url: << parameters.custom_url >>
       conflict: << parameters.conflict >>
       execution_method: << parameters.execution_method >>
-      crowd: << parameters.crowd >>
       release: << parameters.release >>
       automation_max_retries: << parameters.automation_max_retries >>
       token: << parameters.token >>
