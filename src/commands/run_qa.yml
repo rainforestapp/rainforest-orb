@@ -121,11 +121,11 @@ steps:
         fi
 
         # Set custom_url, or validate and set environment_id
-        if [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.custom_url >>" ] ; then
+        if [ -n "<< parameters.custom_url >>" ] ; then
           if [ -n "<< parameters.environment_id >>" ] ; then
             echo "Warning: Environment ID ignored. You've set values for the mutually exclusive custom_url and environment_id parameters. Unset one of these to fix this warning."
           fi
-        elif [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.environment_id >>" ] ; then
+        elif [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^[0-9]+$' ; then
             echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
             exit 1
