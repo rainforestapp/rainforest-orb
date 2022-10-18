@@ -43,7 +43,7 @@ parameters:
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
-    default: RAINFOREST_TOKEN
+    default: RAINFOREST_API_TOKEN
 
   dry_run:
     description: Set to true to run parameter validations without starting a new Rainforest run

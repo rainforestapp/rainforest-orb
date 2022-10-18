@@ -22,7 +22,7 @@ If you don't already have one, you can sign up for a free account [here](https:/
 ### A Rainforest QA API token
 
 You can find yours on the [Integrations](https://app.rainforestqa.com/settings/integrations) setting page.
-Do not expose this token in your `circleci/.config.yml` file. Instead, [use an environment variable in CircleCI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project). The default name for this token is `RAINFOREST_TOKEN`. You may use a different name, and pass that in to the `rainforest/run` command (see below).
+Do not expose this token in your `circleci/.config.yml` file. Instead, [use an environment variable in CircleCI](https://circleci.com/docs/2.0/env-vars/#setting-an-environment-variable-in-a-project). The default name for this variable is `RAINFOREST_API_TOKEN`. You may use a different name, and pass that in to the `rainforest/run` command (see below).
 
 ### A run group with at least one test
 
@@ -125,7 +125,7 @@ This is not your Rainforest API token, but the name of the environment variable 
 #### Type
 `env_var_name`
 #### Default behavior
-If no `token` parameter is passed in, the `RAINFOREST_TOKEN` environment variable is assumed to contain your Rainforest QA API token.
+If no `token` parameter is passed in, the `RAINFOREST_API_TOKEN` environment variable is assumed to contain your Rainforest QA API token.
 
 ### `dry_run`
 Set to `true` to run parameter validations without actually starting a run in Rainforest.
@@ -209,7 +209,7 @@ Parameter | Type | Required | Allowed values | Default
 `execution_method` | `string` | | `automation` `crowd` `automation_and_crowd` `on_premise` | `""`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `automation_max_retries` | `string` | | string evaluating to a positive integer | `""`
-`token` | `env_var_name` | | any environment variable name | `"RAINFOREST_TOKEN"`
+`token` | `env_var_name` | | any environment variable name | `"RAINFOREST_API_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
 `pipeline_id` | `string` | ✓ | any string | —
 
