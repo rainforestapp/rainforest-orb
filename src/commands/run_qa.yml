@@ -30,20 +30,20 @@ parameters:
     type: string
     default: ""
 
-  crowd:
-    description: "DEPRECATED: Use `execution_method` instead"
-    type: string
-    default: ""
-
   release:
     description: Manually entered release information about the release the run is associated with
     type: string
     default: "$CIRCLE_SHA1"
 
+  automation_max_retries:
+    description: If set to a value > 0 and a test run using automation fails, it will be retried within the same run, up to that number of times
+    type: string
+    default: ""
+
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
-    default: RAINFOREST_TOKEN
+    default: RAINFOREST_API_TOKEN
 
   dry_run:
     description: Set to true to run parameter validations without starting a new Rainforest run
@@ -68,7 +68,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 4.1.0
+        ORB_VERSION: 5.0.0
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -116,34 +116,29 @@ steps:
         fi
 
         # Set custom_url, or validate and set environment_id
-        if [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.custom_url >>" ] ; then
+        if [ -n "<< parameters.custom_url >>" ] ; then
           if [ -n "<< parameters.environment_id >>" ] ; then
             echo "Warning: Environment ID ignored. You've set values for the mutually exclusive custom_url and environment_id parameters. Unset one of these to fix this warning."
           fi
-        elif [ -z "${RAINFOREST_RUN_ID}" ] && [ -n "<< parameters.environment_id >>" ] ; then
+        elif [ -n "<< parameters.environment_id >>" ] ; then
           if ! echo "<< parameters.environment_id >>" | grep -Eq '^[0-9]+$' ; then
             echo "Error: environment_id not a positive integer (<< parameters.environment_id >>)"
             exit 1
           fi
         fi
 
-        # Validate execution_method / crowd
+        # Validate execution_method
         if [ -n "<< parameters.execution_method >>" ] ; then
           if ! echo "automation crowd automation_and_crowd on_premise" | grep -Eq "\b"<< parameters.execution_method >>"\b" ; then
             echo "Error: << parameters.execution_method >> not in (automation crowd automation_and_crowd on_premise)"
             exit 1
           fi
-        elif [ -n "<< parameters.crowd >>" ] ; then
-          echo "The 'crowd' parameter is deprecated, use 'execution_method' instead."
+        fi
 
-          if [ -n "<< parameters.execution_method >>" ] ; then
-            echo "Error: execution_method and crowd are mutually exclusive"
-            exit 1
-          fi
-
-          if ! echo "default automation automation_and_crowd on_premise_crowd" | grep -Eq "\b"<< parameters.crowd >>"\b" ; then
-            echo "Error: << parameters.crowd >> not in (default automation automation_and_crowd on_premise_crowd)"
-            exit 1
+        # Validate automation_max_retries
+        if [ -n "<< parameters.automation_max_retries >>" ] ; then
+          if ! echo "<< parameters.automation_max_retries >>" | grep -Eq '^[0-9]+$' ; then
+            error "automation_max_retries not a positive integer (<< parameters.automation_max_retries >>)"
           fi
         fi
 
@@ -158,7 +153,7 @@ steps:
             <<# parameters.environment_id >> --environment-id "<< parameters.environment_id >>" <</ parameters.environment_id >> \
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
             <<# parameters.execution_method >> --execution-method "<< parameters.execution_method >>" <</ parameters.execution_method >> \
-            <<# parameters.crowd >> --crowd "<< parameters.crowd >>" <</ parameters.crowd >> \
+            <<# parameters.automation_max_retries >> --automation-max-retries "<< parameters.automation_max_retries >>" <</ parameters.automation_max_retries >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
             --junit-file ~/results/<< parameters.junit_path >>/results.xml \

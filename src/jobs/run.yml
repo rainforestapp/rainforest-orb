@@ -30,20 +30,20 @@ parameters:
     type: string
     default: ""
 
-  crowd:
-    description: "DEPRECATED: Use `execution_method` instead"
-    type: string
-    default: ""
-
   release:
     description: Manually entered release information about the release the run is associated with
     type: string
     default: "$CIRCLE_SHA1"
 
+  automation_max_retries:
+    description: If set to a value > 0 and a test run using automation fails, it will be retried within the same run, up to that number of times
+    type: string
+    default: ""
+
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
-    default: RAINFOREST_TOKEN
+    default: RAINFOREST_API_TOKEN
 
   dry_run:
     description: Set to true to run parameter validations without starting a new Rainforest run
@@ -87,8 +87,8 @@ steps:
       custom_url: << parameters.custom_url >>
       conflict: << parameters.conflict >>
       execution_method: << parameters.execution_method >>
-      crowd: << parameters.crowd >>
       release: << parameters.release >>
+      automation_max_retries: << parameters.automation_max_retries >>
       token: << parameters.token >>
       dry_run: << parameters.dry_run >>
       junit_path: << parameters.junit_path >>
