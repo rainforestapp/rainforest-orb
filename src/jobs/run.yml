@@ -40,6 +40,11 @@ parameters:
     type: string
     default: ""
 
+  branch:
+    description: Use a specific Rainforest branch for this run
+    type: string
+    default: ""
+
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
@@ -89,6 +94,7 @@ steps:
       execution_method: << parameters.execution_method >>
       release: << parameters.release >>
       automation_max_retries: << parameters.automation_max_retries >>
+      branch: << parameters.branch >>
       token: << parameters.token >>
       dry_run: << parameters.dry_run >>
       junit_path: << parameters.junit_path >>
