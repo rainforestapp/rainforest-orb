@@ -40,6 +40,11 @@ parameters:
     type: string
     default: ""
 
+  branch:
+    description: Use a specific Rainforest branch for this run
+    type: string
+    default: ""
+
   token:
     description: The name of the environment variable containing your Rainforest QA API token
     type: env_var_name
@@ -68,7 +73,7 @@ steps:
   - run:
       name: Run Rainforest
       environment:
-        ORB_VERSION: 5.0.0
+        ORB_VERSION: 5.1.0
       command: |
         # Show Orb Version
         echo "Using Rainforest Orb v${ORB_VERSION}"
@@ -154,6 +159,7 @@ steps:
             <<# parameters.conflict >> --conflict "<< parameters.conflict >>" <</ parameters.conflict >> \
             <<# parameters.execution_method >> --execution-method "<< parameters.execution_method >>" <</ parameters.execution_method >> \
             <<# parameters.automation_max_retries >> --automation-max-retries "<< parameters.automation_max_retries >>" <</ parameters.automation_max_retries >> \
+            <<# parameters.branch >> --branch "<< parameters.branch >>" <</ parameters.branch >> \
             --release "<< parameters.release >>" \
             --background="<< parameters.background >>" \
             --junit-file ~/results/<< parameters.junit_path >>/results.xml \

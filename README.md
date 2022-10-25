@@ -120,6 +120,13 @@ If set to a value > 0 and a test run using automation fails, it will be retried 
 #### Default behavior
 If no `automation_max_retries` parameter is passed in, the created run will use the Run Group's configured `automation_max_retries` setting.
 
+### `branch`
+Use a specific Rainforest branch for this run.
+#### Type
+`string`
+#### Default behavior
+If no branch parameter is passed in, the main branch will be used.
+
 ### `token`
 This is not your Rainforest API token, but the name of the environment variable in which it is stored.
 #### Type
@@ -209,6 +216,7 @@ Parameter | Type | Required | Allowed values | Default
 `execution_method` | `string` | | `automation` `crowd` `automation_and_crowd` `on_premise` | `""`
 `release` | `string` | | any string | `"$CIRCLE_SHA1"`
 `automation_max_retries` | `string` | | string evaluating to a positive integer | `""`
+`branch` | `string` | | any string | `""`
 `token` | `env_var_name` | | any environment variable name | `"RAINFOREST_API_TOKEN"`
 `dry_run` | `boolean` | | `true` `false` | `false`
 `pipeline_id` | `string` | ✓ | any string | —
