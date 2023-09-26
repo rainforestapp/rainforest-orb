@@ -280,3 +280,13 @@ This section describes the release process for the orb itself:
 1. Create a [GitHub Release](https://github.com/rainforestapp/rainforest-orb/releases/new) with the proper `v`-prefixed version tag (i.e. `v5.0.0`). List **Bugfixes**, **Breaking changes**, and **New features** (if present), with links to the PRs. See [previous releases](https://github.com/rainforestapp/rainforest-orb/releases) for an idea of the format we've been using.
 
 If you want to run an integration test against Rainforest, create a new branch in the Rainforest repo and update the `.circleci/config.yml` to use the dev version of the orb and add a job to kick-off a Rainforest run.
+
+If the build fails in Circle with an error like:
+```
+Dev versions of orbs are only valid for 90 days after publishing.
+```
+
+Then run:
+```
+(circleci orb pack src | circleci orb validate -) && (circleci orb pack src | circleci orb publish - rainforest-qa/rainforest@dev:alpha)
+```
