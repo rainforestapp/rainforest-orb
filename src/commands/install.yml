@@ -22,6 +22,10 @@ parameters:
     type: enum
     enum: ["386", "amd64"]
     default: amd64
+  github_token:
+    description: Name of the environment variable holding a GitHub token, used to avoid API rate limits when fetching the CLI release.
+    type: env_var_name
+    default: GITHUB_TOKEN
 steps:
   - run:
       name: Warn about deprecations
@@ -43,7 +47,18 @@ steps:
         fi
         echo $release_url
 
-        asset_url=$(curl $release_url | jq -r '.assets[].browser_download_url' | grep << parameters.platform >>-<< parameters.architecture >>)
+        # Pass a GitHub token if available to avoid unauthenticated rate limits
+        # (60 req/hr). Without a token, the API may return a rate-limit error
+        # with no .assets field, causing jq to fail and the install to silently
+        # succeed with an empty asset_url. -f makes curl exit non-zero on HTTP
+        # errors so the step fails loudly instead.
+        if [ -n "${<< parameters.github_token >>}" ]; then
+          api_response=$(curl -f -H "Authorization: token ${<< parameters.github_token >>}" "$release_url")
+        else
+          api_response=$(curl -f "$release_url")
+        fi
+
+        asset_url=$(echo "$api_response" | jq -r '.assets[].browser_download_url' | grep << parameters.platform >>-<< parameters.architecture >>)
 
         wget $asset_url -O rainforest-cli.tgz
         tar xvf rainforest-cli.tgz -C << parameters.install_path >>
